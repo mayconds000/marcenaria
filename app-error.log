@@ -1,0 +1,42 @@
+[Wed Mar 11 09:06:30.792889 2015] [authz_core:error] [pid 2092:tid 948] [client 127.0.0.1:58199] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:06:30.792889 2015] [authz_core:error] [pid 2092:tid 976] [client 127.0.0.1:58200] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:06:34.589411 2015] [authz_core:error] [pid 2092:tid 976] [client 127.0.0.1:58200] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:06:34.589411 2015] [authz_core:error] [pid 2092:tid 948] [client 127.0.0.1:58199] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:06:35.254545 2015] [authz_core:error] [pid 2092:tid 948] [client 127.0.0.1:58199] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:06:35.259546 2015] [authz_core:error] [pid 2092:tid 976] [client 127.0.0.1:58200] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:06:35.769104 2015] [authz_core:error] [pid 2092:tid 948] [client 127.0.0.1:58199] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:06:35.769104 2015] [authz_core:error] [pid 2092:tid 976] [client 127.0.0.1:58200] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:06:36.846648 2015] [authz_core:error] [pid 2092:tid 976] [client 127.0.0.1:58200] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:06:36.846648 2015] [authz_core:error] [pid 2092:tid 948] [client 127.0.0.1:58199] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:06:37.433520 2015] [authz_core:error] [pid 2092:tid 948] [client 127.0.0.1:58199] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:06:37.433520 2015] [authz_core:error] [pid 2092:tid 976] [client 127.0.0.1:58200] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:06:45.648780 2015] [authz_core:error] [pid 2092:tid 976] [client 127.0.0.1:58202] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:06:45.650780 2015] [authz_core:error] [pid 2092:tid 948] [client 127.0.0.1:58203] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:07:02.363857 2015] [authz_core:error] [pid 2092:tid 948] [client 127.0.0.1:58205] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:07:02.363857 2015] [authz_core:error] [pid 2092:tid 976] [client 127.0.0.1:58206] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:07:04.373990 2015] [authz_core:error] [pid 2092:tid 976] [client 127.0.0.1:58206] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/controller/
+[Wed Mar 11 09:07:04.375989 2015] [authz_core:error] [pid 2092:tid 976] [client 127.0.0.1:58206] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/controller/
+[Wed Mar 11 09:07:04.375989 2015] [authz_core:error] [pid 2092:tid 948] [client 127.0.0.1:58205] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/controller/
+[Wed Mar 11 09:07:15.059286 2015] [authz_core:error] [pid 2092:tid 948] [client 127.0.0.1:58207] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:07:15.061285 2015] [authz_core:error] [pid 2092:tid 976] [client 127.0.0.1:58208] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:07:16.349817 2015] [authz_core:error] [pid 2092:tid 976] [client 127.0.0.1:58208] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:07:16.350817 2015] [authz_core:error] [pid 2092:tid 948] [client 127.0.0.1:58207] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:07:16.550927 2015] [authz_core:error] [pid 2092:tid 948] [client 127.0.0.1:58207] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:07:16.552927 2015] [authz_core:error] [pid 2092:tid 976] [client 127.0.0.1:58208] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:07:16.737881 2015] [authz_core:error] [pid 2092:tid 976] [client 127.0.0.1:58208] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 09:07:16.738880 2015] [authz_core:error] [pid 2092:tid 948] [client 127.0.0.1:58207] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 15:32:52.207958 2015] [authz_core:error] [pid 2732:tid 968] [client 127.0.0.1:60489] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 15:32:52.207958 2015] [authz_core:error] [pid 2732:tid 976] [client 127.0.0.1:60490] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 15:33:10.885994 2015] [authz_core:error] [pid 2732:tid 968] [client 127.0.0.1:60492] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 15:33:10.888994 2015] [authz_core:error] [pid 2732:tid 968] [client 127.0.0.1:60492] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 15:33:12.595089 2015] [authz_core:error] [pid 2732:tid 968] [client 127.0.0.1:60492] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 15:33:12.595089 2015] [authz_core:error] [pid 2732:tid 976] [client 127.0.0.1:60493] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 15:33:14.609200 2015] [authz_core:error] [pid 2732:tid 976] [client 127.0.0.1:60493] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 15:33:14.609200 2015] [authz_core:error] [pid 2732:tid 968] [client 127.0.0.1:60492] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 15:33:16.341297 2015] [authz_core:error] [pid 2732:tid 968] [client 127.0.0.1:60492] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 15:33:16.342297 2015] [authz_core:error] [pid 2732:tid 976] [client 127.0.0.1:60493] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 15:33:18.446413 2015] [authz_core:error] [pid 2732:tid 976] [client 127.0.0.1:60493] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 11 15:33:18.449413 2015] [authz_core:error] [pid 2732:tid 976] [client 127.0.0.1:60493] AH01630: client denied by server configuration: C:/Apache24, referer: http://dev.ads/
+[Wed Mar 25 16:29:18.582847 2015] [authz_core:error] [pid 8512:tid 984] [client ::1:58748] AH01630: client denied by server configuration: D:/projetos/sistema_ads/public/
+[Wed Mar 25 16:29:50.473477 2015] [authz_core:error] [pid 8512:tid 984] [client ::1:58749] AH01630: client denied by server configuration: D:/projetos/sistema_ads/public/
+[Wed Mar 25 16:29:51.707853 2015] [authz_core:error] [pid 8512:tid 984] [client ::1:58749] AH01630: client denied by server configuration: D:/projetos/sistema_ads/public/

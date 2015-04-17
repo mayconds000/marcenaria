@@ -1,0 +1,37 @@
+<div class="buy" ng-controller="buyCtrl">
+    <div class="container">
+        <div class="col-sm-6 col-md-3">
+            <select name="" id="" ng-model="year" class="form-control">
+                <option value="2015" selected>2015</option>
+                <option ng-repeat="year in years" value="{{year}}" >{{year}}</option>
+            </select>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <select name="" id="" ng-model="month" class="form-control">
+                <option value="all" selected>Todos</option>
+                <option ng-repeat="month in months" value="{{month.number}}" >{{month.mes}}</option>
+            </select>
+        </div>
+        <div class="col-sm-6 col-md-6">
+            <select name="" id="" ng-model="fornecedor" class="form-control">
+                <option ng-repeat="supplier in suppliers" value="{{supplier.firstName}}">{{supplier.firstName}}</option>
+            </select>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="order in orders | tempo:year:month | filter:fornecedor">
+                    <td>{{order.data}}</td>
+                    <td>{{order.firstName +" "+ order.lastName}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

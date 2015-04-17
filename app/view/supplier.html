@@ -1,0 +1,136 @@
+<div ng-controller="supplierCtrl" ng-init="getCustomers()">
+    <h1>Fornecedores</h1>
+    <div id="listCustomer" ng-hide="upCustomer">
+
+        <div class="input-group">
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-search"></span>
+            </span>
+          <input type="text" class="form-control" ng-model="search.$">
+          <div class="input-group-btn">
+          <!-- Button and dropdown menu -->
+          <button type="button" class="btn btn-primary dropdown-toggle"
+          data-toggle="dropdown" aria-expanded="false" ng-click="newCustomer()">Novo</button>
+          </div>
+        </div>
+
+        <table class="table table-condensed table-hover">
+            <thead>
+                <th width="5%">#</th>
+                <th width="55%">Nome</th>
+                <th width="15%">Telefone</th>
+                <th width="15%">Celular</th>
+                <th width="5%">Editar</th>
+                <th width="5%">Remover</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="customer in customers | orderBy:'firstName'
+                | filter:search:strict">
+                    <td>{{customer.id}}</td>
+                    <td>{{customer.firstName }}  {{ customer.lastName }}</td>
+                    <td>{{customer.phone}}</td>
+                    <td>{{customer.celphone}}</td>
+                    <td><button ng-click="editCustomer(customer)"
+                    class="btn btn-success btn-xs">Editar</button></td>
+                    <td><button ng-click="delCustomer(customer)"
+                    class="btn btn-danger btn-xs">Remover</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div><!-- end div listCustomer-->
+
+    <!-- Formulario -->
+    <div id="upCustomer" ng-show="upCustomer" class="col-sm-12 container well">
+        <form name="form">
+            <fieldset>
+                <legend>{{action}} Fornecedor</legend>
+
+                <div class="form-group col-sm-6">
+                  <label for="in-nome">Nome</label>
+                  <input type="text" class="form-control" id="in-nome"
+                  placeholder="Insira o nome" ng-model="customer.firstName">
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="in-sobrenome">Sobrenome</label>
+                  <input type="text" class="form-control" id="in-sobrenome"
+                  placeholder="Insira o sobrenome" ng-model="customer.lastName">
+                </div>
+
+                <div class="form-group col-sm-6">
+                  <label for="in-cnpj">CNPJ</label>
+                  <input type="text" class="form-control" id="in-cnpj" mask="99.999.999/9999-99"
+                  placeholder="CNPJ" ng-model="customer.cnpj"
+                  ng-blur="validateCnpj(customer.cnpj)" maxlength="19">
+
+                  <div class="alert alert-danger" ng-show="cnpjIsNotValid"
+                  role="alert">CNPJ Invalido. Por favor verifique!</div>
+
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="in-ie">IE</label>
+                  <input type="text" class="form-control" id="in-ie"
+                  placeholder="IE" ng-model="customer.ie">
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="in-endereco">Endereço</label>
+                  <input type="text" class="form-control" id="in-endereco"
+                  placeholder="Endereço" ng-model="customer.address">
+                </div>
+                <div class="form-group col-sm-2">
+                  <label for="in-numero">Numero</label>
+                  <input type="text" class="form-control" id="in-numero"
+                  placeholder="Numero" ng-model="customer.number">
+                </div>
+                <div class="form-group col-sm-4">
+                  <label for="in-bairro">Bairro</label>
+                  <input type="text" class="form-control" id="in-bairro"
+                  placeholder="Bairro" ng-model="customer.neighborhood">
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="in-cidade">Cidade</label>
+                  <input type="text" class="form-control" id="in-cidade"
+                  placeholder="Cidade" ng-model="customer.city">
+                </div>
+                <div class="form-group col-sm-2">
+                  <label for="in-uf">UF</label>
+                  <input type="text" class="form-control" id="in-uf"
+                  placeholder="UF" ng-model="customer.state" maxlength="2">
+                </div>
+                <div class="form-group col-sm-4">
+                  <label for="in-cep">CEP</label>
+                  <input type="text" class="form-control" id="in-cep"
+                  placeholder="CEP" maxlength="9" mask="99999-999" clean="true"
+                   ng-model="customer.cep">
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="in-telefone">Telefone:</label>
+                  <input type="text" class="form-control" id="in-telefone"
+                  placeholder="Telefone" maxlength="15" mask="[99] 9999-9999*?"
+                  clean="true" ng-value="customer.phone" ng-model="customer.phone">
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="in-celular">Celular:</label>
+                  <input type="text" class="form-control" id="in-celular"
+                  placeholder="Celular" maxlength="15" mask="[99] 9999-9999*?"
+                  clean="true" ng-value="customer.celphone" ng-model="customer.celphone">
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="in-email">E-mail:</label>
+                  <input type="email" class="form-control" id="in-email"
+                  placeholder="E-mail" ng-model="customer.email">
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="in-obs">Obs.:</label>
+                  <input type="text" class="form-control" id="in-obs"
+                  placeholder="Observação" ng-model="customer.obs">
+                </div>
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-danger pull-right" ng-click="voltar()">Voltar</button>
+                    <button type="submit" class="btn btn-primary pull-right" ng-click="saveCustomer(customer)">Salvar</button>
+                </div>
+
+            </fieldset>
+        </form>
+    </div><!-- end div upCustomer-->
+
+</div>

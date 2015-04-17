@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Sistema para Marcenaria">
+        <meta name="author" content="Maycon donizete dos santos">
+        <link rel="apple-touch-icon" sizes="57x57" href="ico/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="ico/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="ico/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="ico/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="ico/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="ico/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="ico/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="ico/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="ico/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="ico/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="ico/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="ico/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="ico/favicon-16x16.png">
+        <link rel="manifest" href="ico/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="ico/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
+
+      <title>Single Page Application</title>
+      <link href="app/lib/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+      <link href="app/css/app.css" type="text/css" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <<!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">ADS MÓVEIS</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#/customer">Clientes</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" style="cursor: pointer;" data-toggle="dropdown"
+                role="button" aria-expanded="false">Compras <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/supplier">Fornecedores</a></li>
+                    <li><a href="#/buy">Pedidos</a></li>
+                </ul>
+            </li>
+            <li><a href="#/orders">Pedidos</a></li>
+            <li><a href="#/stock">Estoque</a></li>
+            <li><a href="#/production">Produção</a></li>
+            <li class="dropdown">
+              <a href="#/financial" class="dropdown-toggle" data-toggle="dropdown"
+               role="button" aria-expanded="false">Financeiro <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Fluxo de caixa</a></li>
+                <li><a href="#">Contas a Pagar</a></li>
+                <li><a href="#">Contas a Receber</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Movimento Bancário</li>
+                <li><a href="#">Entrada</a></li>
+                <li><a href="#">Saída</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container" style="margin-top: 50px;" ng-view></div>
+
+  </body>
+
+  <script src="app/lib/angularjs/angular.min.js"></script>
+  <script src="app/lib/angularjs/angular-route.js"></script>
+  <script src="app/lib/angularjs/angular-locale_pt-br.js"></script>
+  <script src="app/lib/jquery/jquery.min.js"></script>
+  <script src="app/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="app/lib/validations/cpf_cnpj.js"></script>
+    <script src="app/lib/validations/phone.js"></script>
+    <script src="app/lib/ngmask/ngMask.js"></script>
+    <script src="app.js"></script>
+
+  <!-- Controllers -->
+    <script src="app/controller/customerCtrl.js"></script>
+    <script src="app/controller/supplierCtrl.js"></script>
+    <script src="app/controller/buyCtrl.js"></script>
+    <script src="app/controller/mainCtrl.js"></script>
+
+  <!-- Services -->
+</html>
