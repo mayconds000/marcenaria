@@ -46,7 +46,7 @@ class Buy {
     }
 
     public function fetchAll() {
-        $sql = "SELECT b.numero, b.data_compra as data, b.valor, s.firstName, s.lastName
+        $sql = "SELECT b.id, b.numero, b.data_compra as data, b.fornecedor_id, b.valor, s.firstName, s.lastName
         FROM buy b LEFT JOIN supplier s ON b.fornecedor_id = s.id
         ";
         $stm = DB::prepare($sql);

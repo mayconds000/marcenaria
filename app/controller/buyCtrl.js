@@ -52,36 +52,48 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
 
     $scope.edit = function(compra) {
         $scope.newBuy = true;
+        $scope.compra = {};
         $scope.compra = compra;
-        save();
+        $scope.compra.fornecedor = compra.fornecedor_id;
+        $scope.compra.data = new Date(compra.data);
+        $scope.compra.valor = $filter('currency')($scope.compra.valor);
+    };
+
+    $scope.back = function() {
+        $scope.newBuy = false;
     };
 
     $scope.save = function() {
         var data = (JSON.parse(JSON.stringify($scope.compra)));
-        // data.data = data.data.substr(0,10);
-        // data.valor = data.valor.toString().replace(",",".");
+        data.data = data.data.substr(0,10);
+        data.valor = data.valor.toString().replace(",",".");
+        if(data.hasOwnProperty('id')){
+            //editar
+            console.log("editar");
+            $http.put(svrUrl + "/buy", data).success(function() {
+                console.log("atualizado - " + data);
+                $scope.cadSuccess = true;
 
-        console.log(data.data);
-        console.log(data.valor);
+                setTimeout(function() {
+                    $scope.newBuy = false;
+                    $scope.cadSuccess = false;
+                    getOrders();
+                }, 10000);
+            });
+        } else {
+            //criar
+            console.log("criar nova compra");
+            $http.post(svrUrl + "/buy", data).success(function(data) {
 
-        // if(data.hasOwnProperty('id')){
-        //     //editar
-        //     $http.put(svrUrl + "/buy", data).success(function() {
-        //         console.log("atualizado - " + data);
-        //     });
-        // } else {
-        //     //criar
-        //     $http.post(svrUrl + "/buy", data).success(function(data) {
-        //
-        //         $scope.cadSuccess = true;
-        //
-        //         setTimeout(function() {
-        //             $scope.newBuy = false;
-        //             $scope.cadSuccess = false;
-        //             getOrders();
-        //         }, 3500);
-        //     });
-        // }
+                $scope.cadSuccess = true;
+
+                setTimeout(function() {
+                    $scope.newBuy = false;
+                    $scope.cadSuccess = false;
+                    getOrders();
+                }, 3500);
+            });
+        }
     };
 
 
@@ -91,18 +103,21 @@ $app.filter('tempo', function() {
     return function(item, year, month) {
         year = year === undefined ? "2015" : year;
         month = month === undefined ? "all" : month;
-        result = [];
-        for(x in item) {
-            if(item[x].data.substr(0,4) == year) {
-                if(month == "all") {
-                    result.push(item[x]);
-                }else{
-                    if(item[x].data.substr(5,2) == month)
-                    result.push(item[x]);
+        if(item != undefined) {
+            result = [];
+            for(x in item) {
+                if(item[x].data.substr(0,4) == year) {
+                    if(month == "all") {
+                        result.push(item[x]);
+                    }else{
+                        if(item[x].data.substr(5,2) == month)
+                        result.push(item[x]);
+                    }
                 }
             }
+
+            return result;
         }
-        return result;
     };
 
 });

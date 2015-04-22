@@ -1,37 +1,99 @@
 <div class="buy" ng-controller="buyCtrl">
-    <div class="container">
-        <div class="col-sm-6 col-md-3">
-            <select name="" id="" ng-model="year" class="form-control">
-                <option value="2015" selected>2015</option>
-                <option ng-repeat="year in years" value="{{year}}" >{{year}}</option>
-            </select>
+    <div class="container" ng-hide="newBuy">
+        <h1>Compras</h1>
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3 class="panel-title">Filtrar</h3></div>
+            <div class="panel-body">
+                <div class="col-sm-4 col-md-3 form-group">
+                    <label for="">Ano</label>
+                    <select name="" id="" ng-model="year" class="form-control input-sm">
+                        <option value="2015">2015</option>
+                        <option ng-repeat="year in years" value="{{year}}" >{{year}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 col-md-3 form-group">
+                    <label for="">Mês</label>
+                    <select name="" id="" ng-model="month" class="form-control input-sm">
+                        <option value="all">Todos</option>
+                        <option ng-repeat="month in months" value="{{month.number}}" >{{month.mes}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 col-md-6 form-group">
+                    <label for="">Fornecedor</label>
+                        <select name="" id="" ng-model="fornecedor" class="form-control input-sm">
+                            <option value="">Todos</option>
+                            <option ng-repeat="supplier in suppliers" value="{{supplier.firstName}}">{{supplier.firstName}}</option>
+                        </select>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-6 col-md-3">
-            <select name="" id="" ng-model="month" class="form-control">
-                <option value="all" selected>Todos</option>
-                <option ng-repeat="month in months" value="{{month.number}}" >{{month.mes}}</option>
-            </select>
+        <div class="col-sm-12 col-md-12">
+            <button class="btn btn-primary pull-left" ng-click="add()">Adicionar Nota</button>
         </div>
-        <div class="col-sm-6 col-md-6">
-            <select name="" id="" ng-model="fornecedor" class="form-control">
-                <option ng-repeat="supplier in suppliers" value="{{supplier.firstName}}">{{supplier.firstName}}</option>
-            </select>
-        </div>
-
-        <table>
+        <br />
+        <br />
+        <br />
+        <table class="table table-condensed">
             <thead>
                 <tr>
-                    <th>Data</th>
-                    <th>Descrição</th>
+                    <th width="20%">Data</th>
+                    <th width="20%">Numero</th>
+                    <th width="25%">Fornecedor</th>
+                    <th width="15%">Valor</th>
+                    <th width="10%"></th>
+                    <th width="10%"></th>
+
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="order in orders | tempo:year:month | filter:fornecedor">
-                    <td>{{order.data}}</td>
-                    <td>{{order.firstName +" "+ order.lastName}}</td>
+                <tr ng-repeat="order in orders | tempo:year:month | filter:fornecedor | orderBy: 'data'">
+                    <td>{{order.data | date:"dd-MM-yyyy"}}</td>
+                    <td>{{order.numero}}</td>
+                    <td>{{order.firstName}}</td>
+                    <td>{{order.valor | currency: "R$ "}}</td>
+                    <td><button class="btn btn-default btn-xs" ng-click="edit(order)">Editar</button></td>
+                    <td><button class="btn btn-danger btn-xs" ng-click="rm(order)">Excluir</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>TOTAL</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <div ng-show="cadSuccess">
+        
+    </div>
+    <div ng-show="newBuy">
+        <form action="" name="nova-compra">
+            <div class="col-sm-6 col-md-3 form-group">
+                <label for="">Numero</label>
+                <input type="text" class="form-control" ng-model="compra.numero">
+            </div>
+            <div class="col-sm-6 col-md-3 form-group">
+                <label for="">Fornecedor</label>
+                <select name="" id="" class="form-control"
+                ng-model="compra.fornecedor">
+                    <option ng-repeat="supplier in suppliers" value="{{supplier.id}}">{{supplier.firstName}}</option>
+                </select>
+            </div>
+            <div class="col-sm-6 col-md-3 form-group">
+                <label for="">Data</label>
+                <input type="date" class="form-control" name="data" ng-model="compra.data">
+            </div>
+            <div class="col-sm-6 col-md-3 form-group">
+                <label for="">Valor</label>
+                <input type="text" name="valor" class="form-control" ng-model="compra.valor">
+            </div>
+
+            <button class="btn btn-default" ng-click="back()">voltar</button>
+            <button class="btn btn-primary" ng-click="save()">Cadastrar</button>
+        </form>
+    </div>
+
 
 </div>
