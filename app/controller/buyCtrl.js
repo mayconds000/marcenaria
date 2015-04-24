@@ -20,8 +20,9 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
     $scope.searchIsTrue = true;
     $scope.newBuy = false;
     $scope.cadSuccess = false;
-    $scope.years = ["2016", "2017"];
+    $scope.years = ["2015", "2016", "2017"];
     $scope.months = [
+        {mes: "Todos", number: "all"},
         {mes: "Janeiro", number: "01"},
         {mes: "Fevereiro", number: "02"},
         {mes: "Março", number: "03"},
