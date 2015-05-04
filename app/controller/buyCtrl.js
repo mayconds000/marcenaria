@@ -3,7 +3,6 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
     (function() {
         $http.get(svrUrl + '/supplier').success(function(data) {
             $scope.suppliers = data;
-
         });
     })();
 
@@ -17,7 +16,6 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
     };
 
     getOrders();
-    $scope.searchIsTrue = true;
     $scope.newBuy = false;
     $scope.cadSuccess = false;
     $scope.years = ["2015", "2016", "2017"];
@@ -43,10 +41,10 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
     };
 
 
-    $scope.rm = function() {
-        if(window.confirm("Você tem certeza que deseja deletar o item: "+ compra.id)){
-            $http.delete(svrUrl + "/buy", data).success(function(data) {
-                console.log("compra deletado com sucesso")
+    $scope.rm = function(compra) {
+        if(window.confirm("Você tem certeza que deseja deletar o item: "+ compra.numero)){
+            $http.delete(svrUrl + "/buy", compra).success(function(data) {
+                console.log("compra deletado com sucesso");
             });
         }
     };
@@ -57,67 +55,30 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
         $scope.compra = compra;
         $scope.compra.fornecedor = compra.fornecedor_id;
         $scope.compra.data = new Date(compra.data);
-        $scope.compra.valor = $filter('currency')($scope.compra.valor);
+        $scope.compra.valor = $scope.compra.valor.replace(".",",");
     };
 
     $scope.back = function() {
         $scope.newBuy = false;
     };
 
-    $scope.save = function() {
-        var data = (JSON.parse(JSON.stringify($scope.compra)));
-        data.data = data.data.substr(0,10);
-        data.valor = data.valor.toString().replace(",",".");
-        if(data.hasOwnProperty('id')){
-            //editar
-            console.log("editar");
-            $http.put(svrUrl + "/buy", data).success(function() {
-                console.log("atualizado - " + data);
-                $scope.cadSuccess = true;
-
-                setTimeout(function() {
-                    $scope.newBuy = false;
-                    $scope.cadSuccess = false;
-                    getOrders();
-                }, 10000);
+    $scope.saveBuy = function() {
+        data = $scope.compra;
+        data.data = data.data.substr(0,5);
+        data.valor = data.valor.replace(",",".");
+        data = {dados: "dados"};
+        if(data.hasOwnProperty('id')) {
+            $http.put(svrUrl + "/buy", data).success(function(data) {
+                console.log("deu certo essa porra!");
+            }).error(function(data) {
+                console.log("nao deu certo essa merda");
             });
         } else {
-            //criar
-            console.log("criar nova compra");
             $http.post(svrUrl + "/buy", data).success(function(data) {
-
-                $scope.cadSuccess = true;
-
-                setTimeout(function() {
-                    $scope.newBuy = false;
-                    $scope.cadSuccess = false;
-                    getOrders();
-                }, 3500);
+                console.log("cadastrou a bagassa");
+            }).error(function(data) {
+                console.log(data);
             });
-        }
-    };
-
-
-});
-
-$app.filter('tempo', function() {
-    return function(item, year, month) {
-        year = year === undefined ? "2015" : year;
-        month = month === undefined ? "all" : month;
-        if(item != undefined) {
-            result = [];
-            for(x in item) {
-                if(item[x].data.substr(0,4) == year) {
-                    if(month == "all") {
-                        result.push(item[x]);
-                    }else{
-                        if(item[x].data.substr(5,2) == month)
-                        result.push(item[x]);
-                    }
-                }
-            }
-
-            return result;
         }
     };
 

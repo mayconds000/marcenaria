@@ -15,7 +15,7 @@ class Buy {
         return $stm->rowCount();
     }
 
-    public function edit($data) {
+    public function update($data) {
         $sql = "UPDATE buy SET fornecedor_id=?, data_compra=?, numero=?, valor=?
         WHERE id=?";
         $stm = DB::prepare($sql);

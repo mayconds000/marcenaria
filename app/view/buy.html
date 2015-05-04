@@ -46,7 +46,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="order in orders | tempo:year:month | filter:fornecedor | orderBy: 'data'">
+                <tr ng-repeat="order in orders | periodo:year:month | filter:fornecedor | orderBy: 'data'">
                     <td>{{order.data | date:"dd-MM-yyyy"}}</td>
                     <td>{{order.numero}}</td>
                     <td>{{order.firstName}}</td>
@@ -91,7 +91,7 @@
             </div>
 
             <button class="btn btn-default" ng-click="back()">voltar</button>
-            <button class="btn btn-primary" ng-click="save()">Cadastrar</button>
+            <button class="btn btn-primary" ng-click="saveBuy()">Cadastrar</button>
         </form>
     </div>
 
