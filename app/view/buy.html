@@ -65,11 +65,11 @@
             </tbody>
         </table>
     </div>
-    <div ng-show="cadSuccess">
-
+    <div ng-show="panelMsg" class="alert alert-success">
+        <span ng-bind="msg"></span>
     </div>
     <div ng-show="newBuy">
-        <form action="" name="nova-compra">
+        <div style="margin-top:20px;">
             <div class="col-sm-6 col-md-3 form-group">
                 <label for="">Numero</label>
                 <input type="text" class="form-control" ng-model="compra.numero">
@@ -90,9 +90,9 @@
                 <input type="text" name="valor" class="form-control" ng-model="compra.valor">
             </div>
 
-            <button class="btn btn-default" ng-click="back()">voltar</button>
-            <button class="btn btn-primary" ng-click="saveBuy()">Cadastrar</button>
-        </form>
+            <span class="btn btn-default" ng-click="back()">voltar</span>
+            <span class="btn btn-primary" ng-click="saveBuy()">Cadastrar</span>
+        </div>
     </div>
 
 

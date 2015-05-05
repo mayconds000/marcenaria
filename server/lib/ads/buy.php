@@ -23,9 +23,10 @@ class Buy {
         try {
             $stm->execute(array(
                 $data->fornecedor,
-                $data->compra,
+                $data->data,
                 $data->numero,
-                $data->valor
+                $data->valor,
+                $data->id
             ));
         } catch(PDOException $e) {
             echo $e->getMessage();
@@ -33,7 +34,7 @@ class Buy {
         return $stm->rowCount();
     }
 
-    public function remove($id) {
+    public function delete($id) {
         $sql = "DELETE FROM buy WHERE id=?";
         $stm = DB::prepare($sql);
         try {

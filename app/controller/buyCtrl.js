@@ -17,7 +17,8 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
 
     getOrders();
     $scope.newBuy = false;
-    $scope.cadSuccess = false;
+    $scope.panelMsg = false;
+    $scope.msg = "";
     $scope.years = ["2015", "2016", "2017"];
     $scope.months = [
         {mes: "Todos", number: "all"},
@@ -43,7 +44,7 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
 
     $scope.rm = function(compra) {
         if(window.confirm("Você tem certeza que deseja deletar o item: "+ compra.numero)){
-            $http.delete(svrUrl + "/buy", compra).success(function(data) {
+            $http.delete(svrUrl + "/buy/"+ compra.id).success(function(data) {
                 console.log("compra deletado com sucesso");
             });
         }
@@ -63,19 +64,31 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
     };
 
     $scope.saveBuy = function() {
-        data = $scope.compra;
-        data.data = data.data.substr(0,5);
+        data = JSON.parse(JSON.stringify($scope.compra));
+        data.data = data.data.substr(0,10);
         data.valor = data.valor.replace(",",".");
-        data = {dados: "dados"};
+        console.log(data);
         if(data.hasOwnProperty('id')) {
             $http.put(svrUrl + "/buy", data).success(function(data) {
-                console.log("deu certo essa porra!");
+                $scope.msg = "compra Atualizada com sucesso!"
+                $scope.panelMsg = true;
+                setTimeout(function() {
+                    getOrders();
+                    $scope.newBuy = false;
+                    $scope.panelMsg = false;
+                }, 3000);
             }).error(function(data) {
-                console.log("nao deu certo essa merda");
+                console.log(data);
             });
         } else {
             $http.post(svrUrl + "/buy", data).success(function(data) {
-                console.log("cadastrou a bagassa");
+                c$scope.msg = "compra cadastrada com sucesso!"
+                $scope.panelMsg = true;
+                setTimeout(function() {
+                    getOrders();
+                    $scope.newBuy = false;
+                    $scope.panelMsg = false;
+                }, 3000);
             }).error(function(data) {
                 console.log(data);
             });
