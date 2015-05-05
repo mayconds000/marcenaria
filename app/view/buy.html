@@ -46,7 +46,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="order in orders | periodo:year:month | filter:fornecedor | orderBy: 'data'">
+                <tr ng-repeat="order in orders | periodo:year:month | filter:fornecedor | filter:soma | orderBy: 'data'">
                     <td>{{order.data | date:"dd-MM-yyyy"}}</td>
                     <td>{{order.numero}}</td>
                     <td>{{order.firstName}}</td>
@@ -58,7 +58,7 @@
                     <td></td>
                     <td></td>
                     <td>TOTAL</td>
-                    <td></td>
+                    <td>{{total}}</td>
                     <td></td>
                     <td></td>
                 </tr>

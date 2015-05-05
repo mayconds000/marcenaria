@@ -1,21 +1,4 @@
 $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
-
-    (function() {
-        $http.get(svrUrl + '/supplier').success(function(data) {
-            $scope.suppliers = data;
-        });
-    })();
-
-    var getOrders = function() {
-        $http.get(svrUrl + '/buy').success(function(data) {
-            $scope.orders = data;
-        }).error(function(data) {
-            console.log(data);
-        });
-
-    };
-
-    getOrders();
     $scope.newBuy = false;
     $scope.panelMsg = false;
     $scope.msg = "";
@@ -34,6 +17,23 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
         {mes: "Outubro", number: "10"},
         {mes: "Novembro", number: "11"},
         {mes: "Dezembro", number: "12"}];
+
+    (function() {
+        $http.get(svrUrl + '/supplier').success(function(data) {
+            $scope.suppliers = data;
+        });
+    })();
+
+    var getOrders = function() {
+        $http.get(svrUrl + '/buy').success(function(data) {
+            $scope.orders = data;
+        }).error(function(data) {
+            console.log(data);
+        });
+
+    };
+
+    getOrders();
 
     $scope.add = function() {
       $scope.newBuy = true;
@@ -94,5 +94,9 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
             });
         }
     };
+    var soma = function() {
+            console.log("funcionando filtro");
+    };
+
 
 });
