@@ -46,21 +46,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="order in orders | periodo:year:month | filter:fornecedor | filter:soma | orderBy: 'data'">
-                    <td>{{order.data | date:"dd-MM-yyyy"}}</td>
-                    <td>{{order.numero}}</td>
-                    <td>{{order.firstName}}</td>
-                    <td>{{order.valor | currency: "R$ "}}</td>
-                    <td><button class="btn btn-default btn-xs" ng-click="edit(order)">Editar</button></td>
-                    <td><button class="btn btn-danger btn-xs" ng-click="rm(order)">Excluir</button></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td>TOTAL</td>
-                    <td>{{total}}</td>
-                    <td></td>
-                    <td></td>
+                <tr ng-repeat="order in orders | filter:fornecedor | periodo:year:month | orderBy: 'data'">
+                    <td><span ng-show="!$last">{{order.data | date:"dd-MM-yyyy"}}</span></td>
+                    <td><span ng-show="!$last">{{order.numero}}</span></td>
+                    <td><span ng-show="!$last">{{order.firstName}}</span><span ng-show="$last"><strong>TOTAL</strong></span></td>
+                    <td><span ng-show="!$last">{{order.valor | currency: "R$ "}}</span><span ng-show="$last"><strong>{{order | currency: "R$ "}}</strong></span></td>
+                    <td><span ng-show="!$last"><button class="btn btn-default btn-xs" ng-click="edit(order)">Editar</button></span></td>
+                    <td><span ng-show="!$last"><button class="btn btn-danger btn-xs" ng-click="rm(order)">Excluir</button></span></td>
                 </tr>
             </tbody>
         </table>

@@ -3,6 +3,7 @@ $app.filter('periodo', function() {
         year = year === undefined ? "2015" : year;
         month = month === undefined ? "all" : month;
             result = [];
+            total =0;
             for(x in item) {
                 if(item[x].data.substr(0,4) == year) {
                     if(month == "all") {
@@ -13,7 +14,10 @@ $app.filter('periodo', function() {
                     }
                 }
             }
-
+            for (x in result) {
+                total += Number(result[x].valor);
+            }
+            result.push(total);
             return result;
     };
 
