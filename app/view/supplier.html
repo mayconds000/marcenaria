@@ -20,8 +20,7 @@
                 <th width="55%">Nome</th>
                 <th width="15%">Telefone</th>
                 <th width="15%">Celular</th>
-                <th width="5%">Editar</th>
-                <th width="5%">Remover</th>
+                <th width="10%"></th>
             </thead>
             <tbody>
                 <tr ng-repeat="customer in customers | orderBy:'firstName'
@@ -31,9 +30,9 @@
                     <td>{{customer.phone}}</td>
                     <td>{{customer.celphone}}</td>
                     <td><button ng-click="editCustomer(customer)"
-                    class="btn btn-success btn-xs">Editar</button></td>
-                    <td><button ng-click="delCustomer(customer)"
-                    class="btn btn-danger btn-xs">Remover</button></td>
+                    class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>
+                    <button ng-click="delCustomer(customer)"
+                    class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
                 </tr>
             </tbody>
         </table>

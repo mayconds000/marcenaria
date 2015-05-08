@@ -26,7 +26,20 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
 
     var getOrders = function() {
         $http.get(svrUrl + '/buy').success(function(data) {
-            $scope.orders = data;
+            var newDate = new Date();
+            var year = newDate.getFullYear();
+            var month = newDate.getMonth();
+            var orders = [];
+            for (x in data) {
+                if(data[x].data.substr(0,4) == year) {
+                    if(data[x].data.substr(5,2) == Number(month) + 1) {
+                        orders.push(data[x])
+                    }
+                } else {
+                console.log("nao existe nenhuma ordem armazenada");
+                };
+            };
+            $scope.orders = orders;
         }).error(function(data) {
             console.log(data);
         });

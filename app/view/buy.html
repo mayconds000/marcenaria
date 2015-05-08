@@ -6,56 +6,63 @@
             <div class="panel-body">
                 <div class="col-sm-4 col-md-3 form-group">
                     <label for="">Ano</label>
-                    <select name="" id="" ng-model="year" class="form-control input-sm"
+                    <select name="" id="" ng-model="year" class="form-control"
                     ng-options="year for year in years">
                         <option value="" disabled>Selecione um ano!</option>
                     </select>
                 </div>
                 <div class="col-sm-4 col-md-3 form-group">
                     <label for="">Mês</label>
-                    <select name="" id="" ng-model="month" class="form-control input-sm"
+                    <select name="" id="" ng-model="month" class="form-control"
                     ng-options="month.number as month.mes for month in months">
                         <option value="" disabled>Selecione um mês!</option>
                     </select>
                 </div>
                 <div class="col-sm-4 col-md-6 form-group">
                     <label for="">Fornecedor</label>
-                        <select name="" id="" ng-model="fornecedor" class="form-control input-sm">
+                        <select name="" id="" ng-model="fornecedor" class="form-control">
                             <option value="">Todos</option>
                             <option ng-repeat="supplier in suppliers" value="{{supplier.firstName}}">{{supplier.firstName}}</option>
                         </select>
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-12">
-            <button class="btn btn-primary pull-left" ng-click="add()">Adicionar Nota</button>
-        </div>
-        <br />
-        <br />
-        <br />
-        <table class="table table-condensed">
-            <thead>
-                <tr>
-                    <th width="20%">Data</th>
-                    <th width="20%">Numero</th>
-                    <th width="25%">Fornecedor</th>
-                    <th width="15%">Valor</th>
-                    <th width="10%"></th>
-                    <th width="10%"></th>
+        <div class="panel panel-default">
+            <div class="panel-heading"><span class="panel-title">Notas</span><button class="btn btn-primary btn-sm pull-right glyphicon glyphicon-plus" ng-click="add()" > </button></div>
+            <div class="panel-body">
+                <table class="table table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th width="20%">Data</th>
+                            <th width="20%">Numero</th>
+                            <th width="30%">Fornecedor</th>
+                            <th width="20%">Valor</th>
+                            <th width="10%"></th>
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="order in orders | filter:fornecedor | periodo:year:month | orderBy: 'data'">
-                    <td><span ng-show="!$last">{{order.data | date:"dd-MM-yyyy"}}</span></td>
-                    <td><span ng-show="!$last">{{order.numero}}</span></td>
-                    <td><span ng-show="!$last">{{order.firstName}}</span><span ng-show="$last"><strong>TOTAL</strong></span></td>
-                    <td><span ng-show="!$last">{{order.valor | currency: "R$ "}}</span><span ng-show="$last"><strong>{{order | currency: "R$ "}}</strong></span></td>
-                    <td><span ng-show="!$last"><button class="btn btn-default btn-xs" ng-click="edit(order)">Editar</button></span></td>
-                    <td><span ng-show="!$last"><button class="btn btn-danger btn-xs" ng-click="rm(order)">Excluir</button></span></td>
-                </tr>
-            </tbody>
-        </table>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="order in orders | filter:fornecedor | periodo:year:month | orderBy: 'data'">
+                            <td><span ng-show="!$last">{{order.data | date:"dd-MM-yyyy"}}</span></td>
+                            <td><span ng-show="!$last">{{order.numero}}</span></td>
+                            <td><span ng-show="!$last">{{order.firstName}}</span><span ng-show="$last"><strong>TOTAL</strong></span></td>
+                            <td><span ng-show="!$last">{{order.valor | currency: "R$ "}}</span>
+                                <span ng-show="$last"><strong>{{order | currency: "R$ "}}</strong></span>
+                            </td>
+                            <td><span ng-show="!$last">
+                                <button class="btn btn-default btn-xs" ng-click="edit(order)">
+                                    <span class="glyphicon glyphicon-pencil"></span></button>
+                                <button class="btn btn-danger btn-xs" ng-click="rm(order)">
+                                    <span class="glyphicon glyphicon-remove"></span></button>
+                                </span>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
     <div ng-show="panelMsg" class="alert alert-success">
         <span ng-bind="msg"></span>
