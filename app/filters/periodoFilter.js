@@ -1,7 +1,11 @@
 $app.filter('periodo', function() {
     return function(item, year, month) {
-        year = year === undefined ? "2015" : year;
-        month = month === undefined ? "all" : month;
+        var newDate = new Date();
+        var y = String(newDate.getFullYear());
+        var m = Number(newDate.getMonth());
+        year = year === undefined ? y : year;
+        month = month === undefined ? m : month;
+        console.log(year +" : "+month);
             result = [];
             total =0;
             for(x in item) {

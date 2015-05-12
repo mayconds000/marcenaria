@@ -35,6 +35,10 @@ $app.config(['$routeProvider', function($routeProvider) {
         controller:'buyCtrl',
         templateUrl: 'app/view/buy.html'
     })
+    .when('/order', {
+        controller:'orderCtrl',
+        templateUrl:'app/view/order.html'
+    })
     .otherwise({redirectTo:'/'});
 
 }]);

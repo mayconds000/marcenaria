@@ -26,20 +26,7 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
 
     var getOrders = function() {
         $http.get(svrUrl + '/buy').success(function(data) {
-            var newDate = new Date();
-            var year = newDate.getFullYear();
-            var month = newDate.getMonth();
-            var orders = [];
-            for (x in data) {
-                if(data[x].data.substr(0,4) == year) {
-                    if(data[x].data.substr(5,2) == Number(month) + 1) {
-                        orders.push(data[x])
-                    }
-                } else {
-                console.log("nao existe nenhuma ordem armazenada");
-                };
-            };
-            $scope.orders = orders;
+             $scope.orders = data;
         }).error(function(data) {
             console.log(data);
         });
@@ -95,7 +82,7 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
             });
         } else {
             $http.post(svrUrl + "/buy", data).success(function(data) {
-                c$scope.msg = "compra cadastrada com sucesso!"
+                $scope.msg = "compra cadastrada com sucesso!"
                 $scope.panelMsg = true;
                 setTimeout(function() {
                     getOrders();
