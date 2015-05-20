@@ -1,8 +1,133 @@
-<div ng-controller="orderCtrl">
-    <div id="newOrder" ng-show="newOrder">
-        
+<div ng-controller="orderCtrl" style="font-size: 14px;">
+    <div id="newOrder"  ng-show="newOrder" >
+        <div class="page-header" style="margin-top:-50px; display:none;">
+        <h1>ADS Móveis</h1>
+            Rua Braz Izzo, 435, Jd. José R. Pires - Marialva - PR<br />
+            Fone: [44] 3232-3530 | Cel.: [44] 8806-9398 | [44]9918-4750<br />
+            E-mail: ads@adsmóveis.com.br - www.adsmoveis.com.br<br />
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="panel-title">Pedido</span>
+                <span>Numero : </span>
+                <span>Data : </span>
+                <span>Status : </span>
+            </div>
+            <div class="panel-body">
+
+                <span class="panel-title">Cliente</span><br>
+                <span>Nome: </span><br>
+                <span>Endereço: </span><br>
+                <span>Contatos: </span><br>
+            </div>
+        </div>
+
+        <button class="btn btn-sm btn-primary">Add Cliente</button>
+        <!-- Ambientes -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="panel-title">Ambiente</span>
+            </div>
+            <div class="panel-body">
+                <table class="table table-condensed tabled-hover">
+                    <thead>
+                        <tr>
+                            <th>Qtd</th>
+                            <th>Descrição</th>
+                            <th>Vlr. Unitário</th>
+                            <th>Vlr. total</th>
+                            <th>Cabecalho</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-sm btn-primary">add Produto</button>
+            </div>
+        </div>
+        <!-- fim ambientes -->
+        <button class="btn btn-sm btn-primary">Add Ambiente</button>
+
+        <!-- Pagamento -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="panel-title">Pagamento</span>
+            </div>
+            <div class="panel-body">
+
+            </div>
+        </div>
+        <!-- fim Pagamento -->
     </div>
     <div id="orders" ng-hide="newOrder">
+        <h1>Pedidos</h1>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="panel-title">Filtros</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group col-sm-4 col-md-4">
+                    <label for="">Numero</label>
+                  <input type="text" class="form-control" ng-model="search.$">
+                </div>
+                <div class="form-group col-sm-4 col-md-4">
+                    <label for="">Mes</label>
+                  <input type="text" class="form-control" ng-model="search.$">
+                </div>
+                <div class="form-group col-sm-4 col-md-4">
+                    <label for="">Ano</label>
+                  <input type="text" class="form-control" ng-model="search.$">
+                </div>
+                <div class="form-group col-sm-4 col-md-4">
+                    <label for="">Cliente</label>
+                  <input type="text" class="form-control" ng-model="search.$">
+                </div>
+                <div class="form-group col-sm-4 col-md-4">
+                    <label for="">Status</label>
+                  <input type="text" class="form-control" ng-model="search.$">
+                </div>
+                <div class="form-group col-sm-4 col-md-4">
+                    <label for="">Pagamento</label>
+                  <input type="text" class="form-control" ng-model="search.$">
+                </div>
+            </div>
+        </div>
 
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="panel-title">Pedidos</span>
+            </div>
+            <div class="panel-body">
+                <table class="table table-condensed table-hover">
+                    <thead>
+                        <th>Nº</th>
+                        <th>Data</th>
+                        <th>Cliente</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Pagamento</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

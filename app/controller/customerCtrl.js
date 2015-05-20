@@ -3,12 +3,16 @@ $app.controller('customerCtrl', function($scope, $http, $window) {
     $scope.upCustomer = false;
     $scope.action = "Cadastrar";
 
-    $scope.getCustomers = function() {
-        $http.get(svrUrl + '/customer').success(function(data) {
-            $scope.customers = data;
-        });
-    };
-    //getCustomers();
+    var getCustomers = function() {
+       $http.get(svrUrl + '/customer').success(function(data) {
+               for (var i in data) {
+                   data[i].phone = PHONE.format(data[i].phone);
+                   data[i].celphone = PHONE.format(data[i].celphone);
+               }
+               $scope.customers = data;
+       });
+  };
+  getCustomers();
 
     $scope.newCustomer = function() {
         $scope.upCustomer = true;
