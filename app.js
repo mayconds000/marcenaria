@@ -42,3 +42,9 @@ $app.config(['$routeProvider', function($routeProvider) {
     .otherwise({redirectTo:'/'});
 
 }]);
+
+$app.controller('HeaderController', function($scope, $location) {
+    $scope.isActive = function(viewLocation) {
+        return viewLocation === $location.path();
+    }
+})

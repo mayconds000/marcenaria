@@ -1,5 +1,5 @@
 <div ng-controller="orderCtrl" style="font-size: 14px;">
-    <div id="newOrder"  ng-show="newOrder" >
+    <div id="newOrder"  ng-show="newOrder && !selectionCustomer" >
         <div class="page-header" style="margin-top:-50px; display:none;">
         <h1>ADS Móveis</h1>
             Rua Braz Izzo, 435, Jd. José R. Pires - Marialva - PR<br />
@@ -8,57 +8,61 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span class="panel-title">Pedido</span>
-                <span>Numero : </span>
-                <span>Data : </span>
-                <span>Status : </span>
+                <span class="panel-title">PEDIDO</span>
+                <span style="margin-left: 40px;">Nº : {{pedido.id}}</span>
+                <span style="margin-left: 40px;">DATA : {{pedido.date_register | date:"dd-MM-yyyy"}}</span>
+                <span style="margin-left: 40px;">STATUS : {{pedido.status}}</span>
             </div>
             <div class="panel-body">
 
-                <span class="panel-title">Cliente</span><br>
-                <span>Nome: </span><br>
-                <span>Endereço: </span><br>
-                <span>Contatos: </span><br>
+                <span><b>CLIENTE: {{pedido.firstName + " " + pedido.lastName | uppercase}}</b></span><br>
+                <span>ENDEREÇO: {{pedido.address  + ", " + pedido.number
+                    + ", " + pedido.neighborhood + ", " + pedido.city
+                    + " - " + pedido.state | uppercase}} </span><br>
+                <span>CONTATOS: {{pedido.phone + " || " + pedido.celphone +" || " + pedido.email| uppercase}} </span><br>
+                <button class="btn btn-sm btn-primary pull-right" ng-click="addCustomer()">Add Cliente</button>
             </div>
         </div>
 
-        <button class="btn btn-sm btn-primary">Add Cliente</button>
+
         <!-- Ambientes -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <span class="panel-title">Ambiente</span>
+        <div id="ambientes" class="clearfix">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">AMBIENTE</span>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-condensed tabled-hover">
+                        <thead>
+                            <tr>
+                                <th>Qtd</th>
+                                <th>Descrição</th>
+                                <th>Vlr. Unitário</th>
+                                <th>Vlr. total</th>
+                                <th>Cabecalho</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-sm btn-primary pull-right">add Produto</button>
+                </div>
             </div>
-            <div class="panel-body">
-                <table class="table table-condensed tabled-hover">
-                    <thead>
-                        <tr>
-                            <th>Qtd</th>
-                            <th>Descrição</th>
-                            <th>Vlr. Unitário</th>
-                            <th>Vlr. total</th>
-                            <th>Cabecalho</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button class="btn btn-sm btn-primary">add Produto</button>
-            </div>
+            <!-- fim ambientes -->
+            <button class="btn btn-sm btn-primary" ng-click="addEnvironment(pedido.id)">Add Ambiente</button>
         </div>
-        <!-- fim ambientes -->
-        <button class="btn btn-sm btn-primary">Add Ambiente</button>
 
         <!-- Pagamento -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span class="panel-title">Pagamento</span>
+                <span class="panel-title">PAGAMENTO</span>
             </div>
             <div class="panel-body">
 
@@ -75,27 +79,27 @@
             <div class="panel-body">
                 <div class="form-group col-sm-4 col-md-4">
                     <label for="">Numero</label>
-                  <input type="text" class="form-control" ng-model="search.$">
+                  <input type="text" class="form-control" ng-model="filterOrder.$">
                 </div>
                 <div class="form-group col-sm-4 col-md-4">
                     <label for="">Mes</label>
-                  <input type="text" class="form-control" ng-model="search.$">
+                  <input type="text" class="form-control" ng-model="filterOrder.$">
                 </div>
                 <div class="form-group col-sm-4 col-md-4">
                     <label for="">Ano</label>
-                  <input type="text" class="form-control" ng-model="search.$">
+                  <input type="text" class="form-control" ng-model="filterOrder.$">
                 </div>
                 <div class="form-group col-sm-4 col-md-4">
                     <label for="">Cliente</label>
-                  <input type="text" class="form-control" ng-model="search.$">
+                  <input type="text" class="form-control" ng-model="filterOrder.$">
                 </div>
                 <div class="form-group col-sm-4 col-md-4">
                     <label for="">Status</label>
-                  <input type="text" class="form-control" ng-model="search.$">
+                  <input type="text" class="form-control" ng-model="filterOrder.$">
                 </div>
                 <div class="form-group col-sm-4 col-md-4">
                     <label for="">Pagamento</label>
-                  <input type="text" class="form-control" ng-model="search.$">
+                  <input type="text" class="form-control" ng-model="filterOrder.$">
                 </div>
             </div>
         </div>
@@ -105,6 +109,7 @@
                 <span class="panel-title">Pedidos</span>
             </div>
             <div class="panel-body">
+                <button class="btn btn-sm btn-primary pull-right" ng-click="addOrder()">Add Pedido</button>
                 <table class="table table-condensed table-hover">
                     <thead>
                         <th>Nº</th>
@@ -116,18 +121,49 @@
                         <th></th>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                        <tr ng-repeat="order in orders track by $index | orderBy:'date_register'">
+                            <td>{{order.id}}</td>
+                            <td>{{order.date_register | date:"dd-MM-yyyy"}}</td>
+                            <td>{{order.firstName +" "+ order.lastName}}</td>
+                            <td>{{order.valor}}</td>
+                            <td>{{order.status}}</td>
+                            <td>{{order.pagamento}}</td>
+                            <td><button ng-click="editOrder(order)"
+                            class="btn btn-default btn-xs"><span
+                            class="glyphicon glyphicon-pencil">
+                            </span></button>
+                            <button ng-click="deleteOrder(order)"
+                            class="btn btn-danger btn-xs">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            </button></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+    </div>
+    <!-- Customer Selection -->
+    <div id="customer-selection" ng-show="selectionCustomer">
+        <h3>Selecione o Cliente</h3>
+        <div class="input-group">
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-search"></span>
+            </span>
+          <input type="text" class="form-control" ng-model="search.firstName">
+         </div>
+         <table class="table table-condensed table-hover">
+             <thead>
+                 <th width="60%">Nome</th>
+                 <th width="20%">Telefone</th>
+                 <th width="20%">Celular</th>
+             </thead>
+             <tbody>
+                 <tr ng-repeat="customer in customers track by $index | filter:search:strict | orderBy:'firstName'">
+                     <td><a href="" ng-click="selectCustomer(customer)">{{ customer.firstName }} {{ customer.lastName }}</a></td>
+                     <td>{{customer.phone}}</td>
+                     <td>{{customer.celphone}}</td>
+                 </tr>
+             </tbody>
+         </table>
     </div>
 </div>

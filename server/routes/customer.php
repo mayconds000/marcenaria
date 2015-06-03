@@ -14,7 +14,7 @@ $app->get('/customer/:id', function($id) {
 });
 //New
 $app->post('/customer', function() use($app) {
-    $data = $app->request->getBody();
+    $data = $app->request()->getBody();
     $data = json_decode($data);
     $cmr = new Customer;
     $data = $cmr->insert($data);

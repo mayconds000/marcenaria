@@ -15,7 +15,7 @@ $app = new \Slim\Slim(array(
     'debug' => true
 ));
 
-$app->contentType( " application/json" );
+$app->contentType("application/json");
 
 function formatJson($obj) {
     echo json_encode($obj);
@@ -24,5 +24,8 @@ function formatJson($obj) {
 require_once 'routes/customer.php';
 require_once 'routes/supplier.php';
 require_once 'routes/buy.php';
+require_once 'routes/order.php';
+require_once 'routes/environment.php';
+require_once 'routes/product_order.php';
 
 $app->run();

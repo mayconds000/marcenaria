@@ -32,7 +32,7 @@
 
   <body>
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top" style="margin-bottom: 20 px;">
+    <nav class="navbar navbar-default navbar-fixed-top" style="margin-bottom: 20 px;" ng-controller="HeaderController">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -45,19 +45,19 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#/customer">Clientes</a></li>
-            <li class="dropdown">
+            <li ng-class="{active: isActive('#/customer')}"><a href="#/customer">Clientes</a></li>
+            <li ng-class="{[active: isActive('#/supplier'), active: isActive('#/buy')]}" class="dropdown" >
                 <a class="dropdown-toggle" style="cursor: pointer;" data-toggle="dropdown"
                 role="button" aria-expanded="false">Compras <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="#/supplier">Fornecedores</a></li>
-                    <li><a href="#/buy">Pedidos</a></li>
+                    <li ><a href="#/buy">Pedidos</a></li>
                 </ul>
             </li>
-            <li><a href="#/order">Pedidos</a></li>
-            <li><a href="#/stock">Estoque</a></li>
-            <li><a href="#/production">Produção</a></li>
-            <li class="dropdown">
+            <li ng-class="{active: isActive('#/order')}"><a href="#/order">Pedidos</a></li>
+            <li ng-class="{active: isActive('#/stock')}"><a href="#/stock">Estoque</a></li>
+            <li ng-class="{active: isActive('#/production')}"><a href="#/production">Produção</a></li>
+            <li ng-class="{active: isActive('#/financial')}" class="dropdown">
               <a href="#/financial" class="dropdown-toggle" data-toggle="dropdown"
                role="button" aria-expanded="false">Financeiro <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">

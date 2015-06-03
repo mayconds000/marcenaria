@@ -43,7 +43,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="order in orders | filter:fornecedor | periodo:year:month | orderBy: 'data'">
-                            <td><span ng-show="!$last">{{order.data | date:"dd-MM-yyyy"}}</span></td>
+                            <td><span ng-show="!$last">{{order.data | date:"dd/MM/yyyy"}}</span></td>
                             <td><span ng-show="!$last">{{order.numero}}</span></td>
                             <td><span ng-show="!$last">{{order.firstName}}</span><span ng-show="$last"><strong>TOTAL</strong></span></td>
                             <td><span ng-show="!$last">{{order.valor | currency: "R$ "}}</span>
