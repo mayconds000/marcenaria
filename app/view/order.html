@@ -20,43 +20,56 @@
                     + ", " + pedido.neighborhood + ", " + pedido.city
                     + " - " + pedido.state | uppercase}} </span><br>
                 <span>CONTATOS: {{pedido.phone + " || " + pedido.celphone +" || " + pedido.email| uppercase}} </span><br>
-                <button class="btn btn-sm btn-primary pull-right" ng-click="addCustomer()">Add Cliente</button>
+                <button class="btn btn-default" ng-click="addCustomer()">Add Cliente</button>
             </div>
         </div>
 
 
         <!-- Ambientes -->
+
         <div id="ambientes" class="clearfix">
-            <div class="panel panel-default">
+            <button class="btn btn-default" ng-click="addEnvironment(pedido.id)">Add Ambiente</button>
+            <div class="panel panel-default" ng-repeat="environment in environments">
                 <div class="panel-heading">
-                    <span class="panel-title">AMBIENTE</span>
+                    <span class="panel-title" ng-hide="environment.id === editEnvId">{{environment.name}}</span>
+                    <input type="text" ng-model="environment.name" ng-show="environment.id === editEnvId" ng-blur="changedNameEnv(environment)">
+                    <button class=" btn btn-xs btn-danger glyphicon
+                    glyphicon-remove pull-right"></button>
+                    <button class=" btn btn-xs btn-default glyphicon
+                    glyphicon-edit pull-right"
+                    ng-click="showInputEditEnv(environment.id)"></button>
                 </div>
                 <div class="panel-body">
                     <table class="table table-condensed tabled-hover">
                         <thead>
                             <tr>
-                                <th>Qtd</th>
-                                <th>Descrição</th>
-                                <th>Vlr. Unitário</th>
-                                <th>Vlr. total</th>
-                                <th>Cabecalho</th>
+                                <th width="10%">Qtd</th>
+                                <th width="40%">Descrição</th>
+                                <th width="20%">Vlr. Unitário</th>
+                                <th width="20%">Vlr. total</th>
+                                <th width="10%"></th>
                             </tr>
                         </thead>
                         <tbody>
+                            <tr ng-repeat="prod in products">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td><input class="form-control" type="text" name="name" maxlength="5" value=""></td>
+                                <td><input class="form-control" type="text"></td>
+                                <td><input class="form-control" type="text"></td>
+                                <td><button class="btn btn-default">Add</button></td>
                                 <td></td>
                             </tr>
                         </tbody>
                     </table>
-                    <button class="btn btn-sm btn-primary pull-right">add Produto</button>
                 </div>
             </div>
             <!-- fim ambientes -->
-            <button class="btn btn-sm btn-primary" ng-click="addEnvironment(pedido.id)">Add Ambiente</button>
         </div>
 
         <!-- Pagamento -->
@@ -109,7 +122,7 @@
                 <span class="panel-title">Pedidos</span>
             </div>
             <div class="panel-body">
-                <button class="btn btn-sm btn-primary pull-right" ng-click="addOrder()">Add Pedido</button>
+                <button class="btn btn-default" ng-click="addOrder()">Add Pedido</button>
                 <table class="table table-condensed table-hover">
                     <thead>
                         <th>Nº</th>
@@ -130,11 +143,11 @@
                             <td>{{order.pagamento}}</td>
                             <td><button ng-click="editOrder(order)"
                             class="btn btn-default btn-xs"><span
-                            class="glyphicon glyphicon-pencil">
+                            class="glyphicon glyphicon-edit">
                             </span></button>
                             <button ng-click="deleteOrder(order)"
                             class="btn btn-danger btn-xs">
-                            <span class="glyphicon glyphicon-trash"></span>
+                            <span class="glyphicon glyphicon-remove"></span>
                             </button></td>
                         </tr>
                     </tbody>

@@ -1,6 +1,8 @@
 $app.controller('orderCtrl', function($window, $scope, $http) {
     $scope.newOrder = false;
     $scope.selectionCustomer = false;
+    $scope.environments = [];
+    $scope.editEnvId = undefined;
     var getCustomers = function() {
         $http.get( svrUrl + '/customer').success(function(data) {
             $scope.customers = data;
@@ -33,7 +35,7 @@ $app.controller('orderCtrl', function($window, $scope, $http) {
         update : function(order) {
             $http.get(svrUrl + '/order/' + order.id).success(function(data) {
                 $scope.pedido = data;
-                environment.getAll(order.id);
+                environment.getAll(data.id);
             });
 
         },
@@ -44,8 +46,7 @@ $app.controller('orderCtrl', function($window, $scope, $http) {
                 //preciso que nao tenha nenhum ambiente cadastrado
                 $http.get(svrUrl + '/environments/' + number).success(function(data){
                     if(data) {
-                        alert("pedido nao pode ser deletado! \n
-                        pois possui ambientes cadastrados!");
+                        alert("pedido nao pode ser deletado! <br /> pois possui ambientes cadastrados!");
                     }else{
                         $http.delete(svrUrl + '/order/' + number).success(function(data) {
                             alert("pedido deletado com sucesso!");
@@ -84,7 +85,7 @@ $app.controller('orderCtrl', function($window, $scope, $http) {
         order.remove(ord.id);
     };
 
-    $scope.addEnvironment = function() {
+    $scope.addEnvironment = function(idOrder) {
         environment.add(idOrder);
     };
 
@@ -92,29 +93,51 @@ $app.controller('orderCtrl', function($window, $scope, $http) {
         environment.remove(env);
     };
 
+    $scope.showInputEditEnv = function(id) {
+        $scope.editEnvId = id;
+        console.log("funcao executou");
+    }
+
+    $scope.changedNameEnv = function(env) {
+        environment.update(env);
+    }
+
+
     var environment = {
         add : function(idOrder) {
-            var data = {};
-            data.idOrder = idOrder;
-            data.name = "Ambiente";
+            var data = {
+                idOrder : idOrder,
+                name : "Ambiente"
+            };
             $http.post(svrUrl + '/environment', data).success(function(data) {
                 //adiciono o ambiente ao pedido - adiciono ao fim do array;
-                this.getAll(data.order_id);
+                if($scope.environments) {
+                    $scope.environments.push(data);
+                } else {
+                    $scope.environments[0] = data;//passo todos os environments
+                }
             });
         },
         remove : function(env) {
             if(confirm("Você tem certeza de que deseja deletar o ambiente: " + env.name)){
                 $http.delete(svrUrl + '/environment').success(function(data){
-
+                    alert("Ambiente: " + data.name + " deletado com sucesso!");
                 });
             };
 
         },
-        update : function() {
-
+        update : function(env) {
+            data = {
+                id : env.id,
+                name : env.name
+            };
+            $http.put(svrUrl + '/environment', data).success(function(data) {
+                $scope.editEnvId = undefined;
+            });
         },
         getAll : function(idOrder) {
-            $http.get(svrUrl + '/environments/', idOrder).success(function(data) {
+            console.log("Entrou no environment.getAll");
+            $http.get(svrUrl + '/environments/'+ idOrder).success(function(data) {
                 $scope.environments = data;
             });
         }
