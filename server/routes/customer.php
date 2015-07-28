@@ -1,7 +1,7 @@
 <?php
 require_once 'lib/ads/customer.php';
 //getAll
-$app->get('/customer', function() {
+$app->get('/customers', function() {
     $cmrs = new Customer;
     $data = $cmrs->fetchAll();
     formatJson($data);

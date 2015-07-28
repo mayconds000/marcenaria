@@ -1,9 +1,14 @@
 <?php
 require_once 'lib/ads/environment.php';
 
-$app->get('/environments/:order', function($order) {
+$app->get('/environments/:id', function($id) {
     $environments = new Environment;
-    formatJson($environments->fetchAll($order));
+    formatJson($environments->fetchAll($id));
+});
+
+$app->get('/environment/:id', function($id){
+    $environments = new Environment;
+    formatJson($environments->fetch($id));
 });
 
 $app->post('/environment', function() use($app) {

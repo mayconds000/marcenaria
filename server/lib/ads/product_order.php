@@ -12,7 +12,7 @@ class ProductOrder {
                 $data->value,
                 $data->environment
                 ));
-                return $stm->rowCount();
+                return $this->fetch(DB::lastInsertId());
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -44,6 +44,18 @@ class ProductOrder {
             echo $e->getMessage();
         }
     }
+
+    public function fetch($id) {
+        $sql = "select * from product_order where id=?";
+        $stm = DB::prepare($sql);
+        try {
+            $stm->execute(array($id));
+            return $stm->fetch();
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public function fetchAll($environment) {
         $sql = "select * from product_order where environment=?";
         $stm = DB::prepare($sql);

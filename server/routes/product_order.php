@@ -1,7 +1,7 @@
 <?php
 require_once 'lib/ads/product_order.php';
 
-$app->get('/products/:environment', function() {
+$app->get('/products/:environment', function($environment) {
     $products = new ProductOrder;
     formatJson($products->fetchAll($environment));
 });

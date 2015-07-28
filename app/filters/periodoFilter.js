@@ -7,13 +7,13 @@ $app.filter('periodo', function() {
         month = month === undefined ? m : month;
         //console.log(year +" : "+month);
             result = [];
-            total =0;
+            total = 0;
             for(x in item) {
                 if(item[x].data.substr(0,4) == year) {
-                    if(month == "all") {
+                    if(month === "all") {
                         result.push(item[x]);
                     }else{
-                        if(item[x].data.substr(5,2) == month)
+                        if(item[x].data.substr(5,2) === month)
                         result.push(item[x]);
                     }
                 }

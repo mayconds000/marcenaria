@@ -30,14 +30,16 @@ class Environment{
 
         try {
             $stm->execute(array($id));
-            return $stm->rowCount();
+            if($stm->rowCount()) {
+                return $id;
+            };
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
     }
 
     public function fetch($id){
-        $sql = "select * from environment where id=?";
+        $sql = "select * from environment where `order`=?";
         $stm = DB::prepare($sql);
 
         try {

@@ -54,7 +54,7 @@
                     <li ><a href="#/buy">Pedidos</a></li>
                 </ul>
             </li>
-            <li ng-class="{active: isActive('#/order')}"><a href="#/order">Pedidos</a></li>
+            <li ng-class="{active: isActive('#/order')}"><a href="#/orders">Pedidos</a></li>
             <li ng-class="{active: isActive('#/stock')}"><a href="#/stock">Estoque</a></li>
             <li ng-class="{active: isActive('#/production')}"><a href="#/production">Produção</a></li>
             <li ng-class="{active: isActive('#/financial')}" class="dropdown">
@@ -90,7 +90,10 @@
     <script src="app.js"></script>
 
     <!-- services -->
-    <script src="app/services/customerSrvc.js"></script>
+    <script src="app/services/customerAPI.js"></script>
+    <script src="app/services/orderAPI.js"></script>
+    <script src="app/services/environmentAPI.js"></script>
+    <script src="app/services/orderProductAPI.js"></script>
 
     <!-- Filters -->
     <script src="app/filters/periodoFilter.js"></script>
@@ -99,7 +102,10 @@
     <script src="app/controller/customerCtrl.js"></script>
     <script src="app/controller/supplierCtrl.js"></script>
     <script src="app/controller/buyCtrl.js"></script>
+    <script src="app/controller/ordersCtrl.js"></script>
     <script src="app/controller/orderCtrl.js"></script>
+    <script src="app/controller/environmentCtrl.js"></script>
+    <script src="app/controller/productCtrl.js"></script>
     <script src="app/controller/mainCtrl.js"></script>
 
 

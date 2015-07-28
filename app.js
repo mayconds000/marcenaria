@@ -1,4 +1,4 @@
-var svrUrl = "http://dev.ads/server/index.php";
+var svrUrl = "http://adsmoveis.sistema/server/index.php";
 var dateToBr = function(data) {
     return data.toString().split("-").reverse().join("/");
 };
@@ -35,9 +35,18 @@ $app.config(['$routeProvider', function($routeProvider) {
         controller:'buyCtrl',
         templateUrl: 'app/view/buy.html'
     })
-    .when('/order', {
+    .when('/orders', {
+        controller:'ordersCtrl',
+        templateUrl:'app/view/orders.html'
+    })
+    //nova ordem
+    .when('/order',{
         controller:'orderCtrl',
         templateUrl:'app/view/order.html'
+    })
+    .when('/order/:id', {
+      controller: 'orderCtrl',
+      templateUrl: 'app/view/order.html'
     })
     .otherwise({redirectTo:'/'});
 
