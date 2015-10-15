@@ -1,4 +1,4 @@
-$app.controller('buyCtrl', function($scope, $http, $window, $filter) {
+$app.controller('buyCtrl', function($scope, $http, $window, $filter, supplierAPI) {
     $scope.newBuy = false;
     $scope.panelMsg = false;
     $scope.msg = "";
@@ -19,7 +19,7 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter) {
         {mes: "Dezembro", number: "12"}];
 
     (function() {
-        $http.get(svrUrl + '/supplier').success(function(data) {
+      supplierAPI.getSupplier().success(function(data) {
             $scope.suppliers = data;
         });
     })();

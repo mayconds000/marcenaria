@@ -3,7 +3,10 @@ $app.factory('orderAPI', function($http){
     if(!id){return $http.get(svrUrl + '/orders')}
     else {return $http.get(svrUrl + '/order/' + id)}
   };
-  var _saveOrder = function(){
+  var _getOrderByCustomer = function(id){
+    return $http.get(svrUrl + '/orders/customer/:id');
+  };
+  var _saveOrder = function(data){
     return $http.post(svrUrl + '/order', data);
   };
   var _updateOrder = function(data){
@@ -15,6 +18,7 @@ $app.factory('orderAPI', function($http){
 
   return {
     getOrder : _getOrder,
+    getOrderByCustomer : _getOrderByCustomer,
     saveOrder : _saveOrder,
     updateOrder : _updateOrder,
     deleteOrder : _deleteOrder

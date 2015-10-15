@@ -1,111 +1,250 @@
 <div ng-controller="orderCtrl">
   <!-- Header do Pedido -->
-  <div ng-show="!selectionCustomer" >
-      <div class="page-header" style="margin-top:-50px; display:none;">
-      <h1>ADS Móveis</h1>
-          Rua Braz Izzo, 435, Jd. José R. Pires - Marialva - PR<br />
-          Fone: [44] 3232-3530 | Cel.: [44] 8806-9398 | [44]9918-4750<br />
-          E-mail: ads@adsmóveis.com.br - www.adsmoveis.com.br<br />
-      </div>
-      <div class="panel panel-default">
-          <div class="panel-heading">
-              <span class="panel-title">PEDIDO</span>
-              <span style="margin-left: 40px;">Nº : {{pedido.id}}</span>
-              <span style="margin-left: 40px;">DATA : {{pedido.date_register | date:"dd-MM-yyyy"}}</span>
-              <span style="margin-left: 40px;">STATUS : {{pedido.status}}</span>
-          </div>
-          <div class="panel-body">
-
-              <span><b>CLIENTE: {{pedido.firstName + " " + pedido.lastName | uppercase}}</b></span><br>
-              <span>ENDEREÇO: {{pedido.address  + ", " + pedido.number
-                  + ", " + pedido.neighborhood + ", " + pedido.city
-                  + " - " + pedido.state | uppercase}} </span><br>
-              <span>CONTATOS: {{pedido.phone + " || " + pedido.celphone +" || " + pedido.email | uppercase}} </span><br>
-              <button class="btn btn-default" ng-click="addCustomer()">{{addOrUpdate}}</button>
-          </div>
+  <div ng-show="!selectionCustomer">
+    <div class="row visible-print-block" style="margin:-50px 0 40px 0; padding:0;">
+      <span class="pull-left">
+        <img src="public/img/logo_adsmoveis_pedido.png" alt="ADS Móveis">
+      </span>
+      <span class="pull-left" style="bottom: 0; margin-left:50px; margin-top:10px;">Rua Braz Izzo, 435, Jd. José R. Pires - Marialva - PR
+        <br /> Fone: [44] 3232-3530 | Cel.: [44] 8806-9398 | [44]9918-4750
+        <br /> E-mail: ads@adsmóveis.com.br - www.adsmoveis.com.br
+        <br />
+      </span>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <span>PEDIDO Nº : {{pedido.id}}</span>
+        <span style="margin-left: 40px;">DATA : {{pedido.date_register | date:"dd-MM-yyyy"}}</span>
+        <span style="margin-left: 40px;">STATUS : {{pedido.status}}</span>
       </div>
 
-      <!-- Ambientes -->
-      <div id="ambientes"  ng-controller ="environmentCtrl" class="clearfix">
-          <button class="btn btn-default" ng-click="addEnvironment(pedido.id)">Add Ambiente</button>
-          <div class="panel panel-default" ng-repeat="environment in environments">
-              <div class="panel-heading">
-                  <span class="panel-title" ng-hide="environment.id === editEnvId">{{environment.name}}</span>
-                  <input type="text" ng-model="environment.name" ng-show="environment.id === editEnvId" ng-blur="changedNameEnv(environment)">
-                  <button class=" btn btn-xs btn-danger glyphicon
-                  glyphicon-remove pull-right" ng-click="delEnvironment(environment)"></button>
-                  <button class=" btn btn-xs btn-default glyphicon
-                  glyphicon-edit pull-right"
-                  ng-click="showInputEditEnv(environment.id)"></button>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <span><b>CLIENTE: {{pedido.firstName + " " + pedido.lastName | uppercase}}</b></span>
+        <br>
+        <span>ENDEREÇO: {{pedido.address + ", " + pedido.number + ", " + pedido.neighborhood + ", " + pedido.city + " - " + pedido.state | uppercase}} </span>
+        <br>
+        <span>CONTATOS: {{pedido.phone + " || " + pedido.celphone +" || " + pedido.email | uppercase}} </span>
+        <br>
+        <button class="btn btn-default hidden-print" ng-click="addCustomer()">{{addOrUpdate}}</button>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="clearfix">
+      <div ng-controller="productCtrl">
+        <span><b>ITENS DO PEDIDO</b></span>
+        <table class="table table-condensed tabled-hover">
+          <thead>
+            <tr>
+              <th width="10%">Qtd</th>
+              <th width="40%">Descrição</th>
+              <th width="20%">Vlr. Unitário</th>
+              <th width="20%">Vlr. total</th>
+              <th width="10%"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="prod in products">
+              <td>{{prod.qtd}}</td>
+              <td>{{prod.description}}</td>
+              <td>{{prod.value | currency:'R$ '}}</td>
+              <td>{{prod.qtd * prod.value | currency:'R$ '}}</td>
+              <td>
+                <button class="btn btn-xs btn-default glyphicon glyphicon-edit hidden-print" ng-click="editProduct(prod)"></button>
+                <button class="btn btn-xs btn-danger glyphicon glyphicon-remove hidden-print" ng-click="removeProduct(prod.id, $index)"></button>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>TOTAL R$ {{totalPedido}}</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <form class="hidden-print" ng-hide="updateP">
+          <div class="form-group col-sm-2 col-md-2">
+            <label for="qtd">Qtd</label>
+            <input class="form-control" name="item[qtd]" type="text" maxlength="5" ng-model="item.qtd" value="">
+          </div>
+          <div class="form-group col-sm-5 col-md-5">
+            <label for="description">Descrição</label>
+            <input class="form-control" type="text" ng-model="item.description">
+          </div>
+          <div class="form-group col-sm-3 col-md-3">
+            <label for="valor">Valor</label>
+            <input class="form-control" type="text" ng-model="item.value">
+          </div>
+          <div class="form-group col-xs-12 col-sm-2 col-md-2">
+            <label for="">&nbsp</label>
+            <button class=" form-group btn btn-default col-xs-12" ng-click="addProduct(item)">
+              Add</button>
+          </div>
+        </form>
+        <form class="hidden-print" ng-show="updateP">
+          <div class="form-group col-sm-2 col-md-2">
+            <label for="qtd">Qtd</label>
+            <input class="form-control" name="item[qtd]" type="text" maxlength="5" ng-model="item.qtd" value="">
+          </div>
+          <div class="form-group col-sm-5 col-md-5">
+            <label for="description">Descrição</label>
+            <input class="form-control" type="text" ng-model="item.description">
+          </div>
+          <div class="form-group col-sm-3 col-md-3">
+            <label for="valor">Valor</label>
+            <input class="form-control" type="text" ng-model="item.value">
+          </div>
+          <div class="form-group col-xs-12 col-sm-2 col-md-2">
+            <label for="">&nbsp</label>
+            <button class=" form-control btn btn-default col-xs-12" ng-click="updateProduct(item)">Alterar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Pagamento -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <span><b>PAGAMENTO</b></span>
+      </div>
+      <div class="panel-body" ng-controller="paymentCtrl">
+        <div class="col-sm-12">
+          <div class="col-sm-6">
+            <span><b>ESCOLHIDO</b></span>
+            <form>
+              <div class="form-group col-sm-12 col-md-6">
+                <label for="">Data</label>
+                <input class="form-control" ng-model="pagamento.data" type="date">
               </div>
-              <div class="panel-body">
-                  <table class="table table-condensed tabled-hover">
-                      <thead>
-                          <tr>
-                              <th width="10%">Qtd</th>
-                              <th width="40%">Descrição</th>
-                              <th width="20%">Vlr. Unitário</th>
-                              <th width="20%">Vlr. total</th>
-                              <th width="10%"></th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr ng-repeat="prod in environment.products">
-                              <td>{{prod.qtd}}</td>
-                              <td>{{prod.description}}</td>
-                              <td>{{prod.value | currency:'R$ '}}</td>
-                              <td>{{prod.qtd * prod.value | currency:'R$ '}}</td>
-                              <td></td>
-                          </tr>
-                          <tr>
-                              <td><input class="form-control" type="text" name="qtd" maxlength="5" ng-model="item.qtd" value=""></td>
-                              <td><input class="form-control" type="text" ng-model="item.description"></td>
-                              <td><input class="form-control" type="text" ng-model="item.value" ></td>
-                              <td><button class="btn btn-default" ng-click="addProduct(environment.id, item)">Add</button></td>
-                              <td></td>
-                          </tr>
-                      </tbody>
-                  </table>
+              <div class="form-group col-sm-12 col-md-6" ng-controller="productCtrl">
+                <label for="">Valor do pedido</label>
+                <input class="form-control" type="text" ng-model="totalPedido" />
               </div>
-          </div>
-          <!-- fim ambientes -->
-      </div>
+              <div class="form-group col-sm-12 col-md-6">
+                <label for="">Desconto</label>
+                <input class="form-control" ng-model="pagamento.desconto" type="text">
+              </div>
+              <div class="form-group col-sm-12 col-md-6">
+                <label for="">Total - Desconto</label>
+                <input class="form-control" ng-model="pagamento.totalDesconto" type="text">
+              </div>
+              <div class="form-group col-sm-12 col-md-6">
+                <label for="">Entrada</label>
+                <input class="form-control" ng-model="pagamento.entrada" type="text">
+              </div>
+              <div class="form-group col-sm-12 col-md-6">
+                <label for="">&nbsp</label>
+                <button class="form-control btn btn-default">Confirmar</button>
+              </div>
 
-      <!-- Pagamento -->
-      <div class="panel panel-default">
-          <div class="panel-heading">
-              <span class="panel-title">PAGAMENTO</span>
-          </div>
-          <div class="panel-body">
+            </form>
 
           </div>
+          <div class="col-sm-6">
+            <span style="width: 100%; display: block;"><b>FORMAS DE PAGAMENTO</b></span>
+            <div class="col-sm-6 panel panel-default">
+              <span>Cartão</span>
+              <div>
+                <ul>
+                  <li>10 x {{pagamento.total / 10 | currency}}</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-sm-6  panel panel-default">
+              <span>Cheque</span>
+              <div>
+                <ul>
+                  <li>1+2 de {{pagamento.total / 3 | currency}} (sem juros)</li>
+                  <li>1+3 de {{(pagamento.total * 1.06) / 4 | currency}} </li>
+                  <li>1+4 de {{(pagamento.total * 1.09) / 5 | currency}}</li>
+                  <li>1+5 de {{(pagamento.total * 1.12) / 6 | currency}}</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-sm-6 panel panel-default">
+              <span>Boleto</span>
+              <div>
+                <ul>
+                  <li>1+2 de </li>
+                  <li>1+3 de </li>
+                  <li>1+4 de </li>
+                  <li>1+5 de </li>
+                  <li>1+6 de </li>
+                  <li>1+7 de </li>
+                  <li>1+8 de </li>
+                  <li>1+9 de </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-sm-6 panel panel-default">
+              <span>Avista</span>
+              <div>preço com desconto</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <span>PARCELAS</span>
+          <table class="table table-hovered">
+            <thead>
+              <tr>
+                <th>Parcela</th>
+                <th>Vencimento</th>
+                <th>Valor</th>
+                <th>Data Pagamento</th>
+                <th>Juros</th>
+                <th>Vlr Pago</th>
+                <th>Status</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1 de 9</td>
+                <td>00/00/2015</td>
+                <td>R$ 1500,00</td>
+                <td>11/11/1111</td>
+                <td>R$ 15,00</td>
+                <td></td>
+                <td></td>
+                <td>x</td>
+                <td>/</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <!-- fim Pagamento -->
+    </div>
+    <!-- fim Pagamento -->
   </div>
 
 
   <!-- Customer Selection -->
   <div id="customer-selection" ng-show="selectionCustomer">
-      <h3>Selecione o Cliente</h3>
-      <div class="input-group">
-          <span class="input-group-addon">
-              <span class="glyphicon glyphicon-search"></span>
-          </span>
-        <input type="text" class="form-control" ng-model="search.firstName">
-       </div>
-       <table class="table table-condensed table-hover">
-           <thead>
-               <th width="60%">Nome</th>
-               <th width="20%">Telefone</th>
-               <th width="20%">Celular</th>
-           </thead>
-           <tbody>
-               <tr ng-repeat="customer in customers track by $index | filter:search:strict | orderBy:'firstName'">
-                   <td><a href="" ng-click="selectCustomer(customer)">{{ customer.firstName }} {{ customer.lastName }}</a></td>
-                   <td>{{customer.phone}}</td>
-                   <td>{{customer.celphone}}</td>
-               </tr>
-           </tbody>
-       </table>
+    <h3>Selecione o Cliente</h3>
+    <div class="input-group">
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-search"></span>
+      </span>
+      <input type="text" class="form-control" ng-model="search.firstName">
+    </div>
+    <table class="table table-condensed table-hover">
+      <thead>
+        <th width="60%">Nome</th>
+        <th width="20%">Telefone</th>
+        <th width="20%">Celular</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="customer in customers track by $index | filter:search:strict | orderBy:'firstName'">
+          <td><a href="" ng-click="selectCustomer(customer)">{{ customer.firstName }} {{ customer.lastName }}</a></td>
+          <td>{{customer.phone}}</td>
+          <td>{{customer.celphone}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

@@ -1,47 +1,50 @@
-$app.controller('orderCtrl', function($scope, $routeParams, orderAPI, customerAPI){
+$app.controller('orderCtrl', function($scope, $routeParams, $location, $route, orderAPI, customerAPI, orderProductAPI){
   $scope.selectionCustomer = false;
   $scope.environments = [];
   $scope.editEnvId = undefined;
-  if($routeParams.id){$scope.addOrUpdate = "Alterar cliente";}
-  else{$scope.addOrUpdate = "Add cliente";}
+  var id = $routeParams.id;
 
-
-  orderAPI.getOrder($routeParams.id).success(function(data){
-    $scope.pedido = data;
-  });
-
-//Colocar pra chamar somente quando eu for selecionar o cliente pq se não eu vou
-// estar chamando mesmo quando eu entro em modo de edição;
-  (function() {
-      customerAPI.getCustomer(null).success(function(data) {
-          $scope.customers = data;
-      });
-  }());
+  if(id){
+    $scope.addOrUpdate = "Alterar cliente";
+    orderAPI.getOrder(id).success(function(data){
+      $scope.pedido = data;
+    });
+  }else{
+    $scope.addOrUpdate = "Add cliente";
+  }
 
   $scope.addCustomer = function() {
-      $scope.selectionCustomer = true;
+      customerAPI.getCustomer(null).success(function(data) {
+          $scope.customers = data;
+          $scope.selectionCustomer = true;
+      });
   };
 
-  $scope.selectCustomer = function(customer) {
+  $scope.selectCustomer = function(data) {
           $scope.selectionCustomer = false;
-          order.new(customer, 1);
+          data.status = 1;
+          data.customer = data.id;
+          if(!id){
+            orderAPI.saveOrder(data).success(function(data){
+              $location.url('/order/' + data.id);
+            });
+          } else {
+            orderAPI.updateOrder(data).success(function(){
+              $route.reload();
+            });
+          }
   };
 
-  $scope.addEnvironment = function(idOrder) {
-      environment.add(idOrder);
+  var getTotal = function(){
+    orderProductAPI.getTotal(id).success(function(data){
+      var total = 0;
+      for(i in data){
+        total += data[i].qtd * data[i].value;
+      }
+      $scope.totalPedido = total;
+    });
   };
 
-  $scope.delEnvironment = function(env) {
-      environment.remove(env);
-  };
-
-  $scope.showInputEditEnv = function(id) {
-      $scope.editEnvId = id;
-      console.log("funcao executou");
-  };
-
-  $scope.changedNameEnv = function(env) {
-      environment.update(env);
-  };
+  getTotal();
 
 });

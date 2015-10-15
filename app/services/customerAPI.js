@@ -9,8 +9,8 @@ $app.factory('customerAPI', function($http){
   var _updateCustomer = function(data){
     return $http.put(svrUrl + '/customer/' + data.id, data);
   };
-  var _deleteCustomer = function(id){
-    return $http.delete(svrUrl + '/customer/' + id);
+  var _deleteCustomer = function(data){
+    return $http.delete(svrUrl + '/customer/' + data.person_type + "/" + id);
   };
 
   return {

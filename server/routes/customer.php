@@ -21,9 +21,8 @@ $app->post('/customer', function() use($app) {
     return formatJson($data);
 });
 //update
-$app->put('/customer', function() use($app) {
-    $data = $app->request()->getBody();
-    $data = json_decode($data);
+$app->put('/customer/:id', function($id) use($app) {
+    $data = json_decode($app->request()->getBody());
     $cmr = new Customer;
     $data = $cmr->update($data);
     return formatJson($data);

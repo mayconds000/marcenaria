@@ -32,7 +32,7 @@
 
   <body>
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top" style="margin-bottom: 20 px;" ng-controller="HeaderController">
+    <nav class="navbar navbar-default navbar-fixed-top clearfix" style="margin-bottom: 20 px;" ng-controller="HeaderController">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -54,7 +54,14 @@
                     <li ><a href="#/buy">Pedidos</a></li>
                 </ul>
             </li>
-            <li ng-class="{active: isActive('#/order')}"><a href="#/orders">Pedidos</a></li>
+            <li ng-class="{active: isActive('#/orders')}" class="dropdown" >
+                <a class="dropdown-toggle" style="cursor: pointer;" data-toggle="dropdown"
+                role="button" aria-expanded="false">Vendas <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/orders">Pedidos</a></li>
+                    <li ><a href="#/orcamento">Orçamento Produto</a></li>
+                </ul>
+            </li>
             <li ng-class="{active: isActive('#/stock')}"><a href="#/stock">Estoque</a></li>
             <li ng-class="{active: isActive('#/production')}"><a href="#/production">Produção</a></li>
             <li ng-class="{active: isActive('#/financial')}" class="dropdown">
@@ -91,9 +98,11 @@
 
     <!-- services -->
     <script src="app/services/customerAPI.js"></script>
+    <script src="app/services/supplierAPI.js"></script>
     <script src="app/services/orderAPI.js"></script>
     <script src="app/services/environmentAPI.js"></script>
     <script src="app/services/orderProductAPI.js"></script>
+    <script src="app/services/paymentAPI.js"></script>
 
     <!-- Filters -->
     <script src="app/filters/periodoFilter.js"></script>
@@ -107,6 +116,7 @@
     <script src="app/controller/environmentCtrl.js"></script>
     <script src="app/controller/productCtrl.js"></script>
     <script src="app/controller/mainCtrl.js"></script>
+    <script src="app/controller/paymentCtrl.js"></script>
 
 
 

@@ -1,4 +1,4 @@
-$app.controller('environmentCtrl', function($scope, $location, $routeParams, environmentAPI){
+$app.controller('environmentCtrl', function($scope, $location, $routeParams, environmentAPI, orderProductAPI){
   var idOrder = $routeParams.id;
   var environment = {
       add : function(idOrder) {
@@ -30,24 +30,43 @@ $app.controller('environmentCtrl', function($scope, $location, $routeParams, env
 
       },
       update : function(env) {
-          data = {
-              id : env.id,
-              name : env.name
+          var data = {
+              id : env.id
+            , name : env.name
           };
+          console.log(data);
+
           environmentAPI.updateEnvironment(data).success(function(data) {
               $scope.editEnvId = undefined;
           });
       },
-      getAll : function(idOrder) {
-              environmentAPI.getEnvironment(idOrder).success(function(data) {
+      getAll : function(idOrder, id) {
+              environmentAPI.getEnvironment(idOrder, id).success(function(data) {
                   $scope.environments = data;
-                  for (x in $scope.environments) {
-                      product.getAll($scope.environments[x].id, x);
-                  }
+                  //Passando pra ser manipulado pelo controller productCtrl
+                  // for (x in $scope.environments) {
+                  //     product.getAll($scope.environments[x].id, x);
+                  // }
               });
           }
   };
 
   environment.getAll(idOrder);
+
+  $scope.addEnvironment = function(idOrder) {
+      environment.add(idOrder);
+  };
+
+  $scope.delEnvironment = function(env) {
+      environment.remove(env);
+  };
+
+  $scope.showInputEditEnv = function(id) {
+      $scope.editEnvId = id;
+  };
+
+  $scope.changedNameEnv = function(env) {
+      environment.update(env);
+  };
 
 });

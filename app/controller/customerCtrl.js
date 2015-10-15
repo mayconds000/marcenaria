@@ -1,10 +1,10 @@
 
-$app.controller('customerCtrl', function($scope, $http, $window) {
+$app.controller('customerCtrl', function($scope, $http, $window, customerAPI, orderAPI) {
     $scope.upCustomer = false;
     $scope.action = "Cadastrar";
 
     var getCustomers = function() {
-       $http.get(svrUrl + '/customer').success(function(data) {
+       customerAPI.getCustomer().success(function(data) {
                for (var i in data) {
                    data[i].phone = PHONE.format(data[i].phone);
                    data[i].celphone = PHONE.format(data[i].celphone);
@@ -48,15 +48,19 @@ $app.controller('customerCtrl', function($scope, $http, $window) {
         $scope.customer = customer;
     };
 
-    $scope.delCustomer = function(data) {
-        //$conf = $window.confirm();
+    $scope.delCustomer = function(id) {
         if($window.confirm("Você tem certeza que deseja deletar?")){
-             $http.delete(svrUrl + "/customer/" + data.person_type + "/" + data.id).success(function(data) {
-                 $scope.getCustomer();
-             }).error(function(data) {
-                 console.log(data);
-             });
-         }
+          orderAPI.getOrderByCustomer(id).success(function(data){
+            if(data){
+                $window.alert('Você não pode deletar este cliente, \n pois existe pedidos cadastrados em nome do mesmo');
+            } else {
+              customerAPI.deleteCustomer(id).success(function(data) {
+                $window.alert("Cliente deletado com sucesso");
+                getCustomer();
+              });
+            }
+          });
+                      }
     };
 
     $scope.saveCustomer = function() {
@@ -67,21 +71,14 @@ $app.controller('customerCtrl', function($scope, $http, $window) {
         data.celphone = PHONE.strip($scope.customer.celphone);
 
         if(data.hasOwnProperty('id')) {
-            //Update
-            $http.put(svrUrl + '/customer', data).success(function(data) {
+            customerAPI.updateCustomer(data).success(function(data) {
                 $scope.upCustomer = false;
-                $scope.getCustomers();
-
-                console.log(data);
-            }).error(function(data){
-                console.log("erro", data);
-
+                getCustomers();
             });
         } else {
-            // Novo
-            $http.post(svrUrl + '/customer', data).success(function(data) {
+          customerAPI.saveCustomer(data).success(function(data) {
                 $scope.upCustomer = false;
-                $scope.getCustomers();
+                getCustomers();
             });
         }
     };

@@ -22,7 +22,7 @@ $app->delete('/environment/:id', function($id) {
     formatJson($environment->delete($id));
 });
 
-$app->put('/environment', function() use($app) {
+$app->put('/environment/:id', function() use($app) {
     $data = json_decode($app->request()->getBody());
     $environment = new Environment;
     formatJson($environment->update($data));

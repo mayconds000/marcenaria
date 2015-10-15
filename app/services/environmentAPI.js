@@ -1,6 +1,6 @@
 $app.factory('environmentAPI', function($http){
-  var _getEnvironment = function(id){
-    if(!id){return $http.get(svrUrl + '/environments/'+ id)}
+  var _getEnvironment = function(idOrder, id){
+    if(!id){return $http.get(svrUrl + '/environments/'+ idOrder)}
     else {return $http.get(svrUrl + '/environment/' + id)}
   };
   var _saveEnvironment = function(data){

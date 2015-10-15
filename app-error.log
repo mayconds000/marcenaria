@@ -40,3 +40,15 @@
 [Wed Mar 25 16:29:18.582847 2015] [authz_core:error] [pid 8512:tid 984] [client ::1:58748] AH01630: client denied by server configuration: D:/projetos/sistema_ads/public/
 [Wed Mar 25 16:29:50.473477 2015] [authz_core:error] [pid 8512:tid 984] [client ::1:58749] AH01630: client denied by server configuration: D:/projetos/sistema_ads/public/
 [Wed Mar 25 16:29:51.707853 2015] [authz_core:error] [pid 8512:tid 984] [client ::1:58749] AH01630: client denied by server configuration: D:/projetos/sistema_ads/public/
+[Wed Sep 02 13:25:49.498050 2015] [authz_core:error] [pid 1476:tid 984] [client ::1:56866] AH01630: client denied by server configuration: D:/www/supermassas/
+[Wed Sep 02 13:26:46.606441 2015] [authz_core:error] [pid 1476:tid 976] [client ::1:56870] AH01630: client denied by server configuration: D:/www/supermassas/
+[Wed Sep 02 13:26:47.402522 2015] [authz_core:error] [pid 1476:tid 976] [client ::1:56870] AH01630: client denied by server configuration: D:/www/supermassas/
+[Wed Sep 02 13:26:47.985100 2015] [authz_core:error] [pid 1476:tid 976] [client ::1:56870] AH01630: client denied by server configuration: D:/www/supermassas/
+[Wed Sep 02 13:26:48.163851 2015] [authz_core:error] [pid 1476:tid 976] [client ::1:56870] AH01630: client denied by server configuration: D:/www/supermassas/
+[Wed Sep 02 13:26:48.333862 2015] [authz_core:error] [pid 1476:tid 976] [client ::1:56870] AH01630: client denied by server configuration: D:/www/supermassas/
+[Wed Sep 02 13:26:48.487871 2015] [authz_core:error] [pid 1476:tid 976] [client ::1:56870] AH01630: client denied by server configuration: D:/www/supermassas/
+[Wed Sep 02 13:27:57.567682 2015] [access_compat:error] [pid 1788:tid 980] [client ::1:56875] AH01797: client denied by server configuration: D:/www/supermassas/
+[Wed Sep 02 13:27:57.970461 2015] [access_compat:error] [pid 1788:tid 980] [client ::1:56875] AH01797: client denied by server configuration: D:/www/supermassas/
+[Wed Sep 02 13:27:58.148158 2015] [access_compat:error] [pid 1788:tid 980] [client ::1:56875] AH01797: client denied by server configuration: D:/www/supermassas/
+[Wed Sep 02 13:27:58.329168 2015] [access_compat:error] [pid 1788:tid 980] [client ::1:56875] AH01797: client denied by server configuration: D:/www/supermassas/
+[Wed Sep 02 13:27:58.500178 2015] [access_compat:error] [pid 1788:tid 980] [client ::1:56875] AH01797: client denied by server configuration: D:/www/supermassas/

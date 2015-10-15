@@ -50,13 +50,17 @@ class Environment{
         }
     }
 
-    public function fetchAll($order) {
+    public function fetchAll($idOrder) {
         $sql = "select * from environment where `order`=?";
         $stm = DB::prepare($sql);
 
         try {
-            $stm->execute(array($order));
-            return $stm->fetchAll();
+            $stm->execute(array($idOrder));
+            if($stm->rowCount()){
+              return $stm->fetchAll();
+            } else {
+              return null;
+            }
         } catch(PDOException $e) {
             echo $e->getMessage();
         }

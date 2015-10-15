@@ -7,3 +7,11 @@ input.ng-valid {
 input.ng-pristine {
     border: 1px solid #ccc;
 }
+@media print{
+  *{
+    font-size: 12px;
+  }
+  td {
+    border:0px solid !important;
+  }
+}

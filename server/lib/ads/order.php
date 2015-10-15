@@ -5,7 +5,7 @@ class Order {
         $stm = DB::prepare($sql);
         try{
             $stm->execute(array(
-                $data->customer->id,
+                $data->id,
                 date("Y-m-d"),
                 $data->status
                 ));
@@ -17,7 +17,7 @@ class Order {
     }
 
     public function update($data) {
-        $sql = "update order set customer=? where id=?";
+        $sql = "update `order` set customer=? where id=?";
         $stm = DB::prepare($sql);
 
         try{
@@ -42,9 +42,9 @@ class Order {
     public function fetch($id=null) {
         if($id){
             $sql = "select o.id, o.customer, o.date_register, s.description as status,
-             c.id as customer_id, c.firstName, c.lastName, c.address,
-            c.number, c.neighborhood, c.city, c.state, c.phone, c.celphone,
-            c.email from `order` o left join customer c on o.customer = c.id
+            c.firstName, c.lastName, c.address, c.number, c.neighborhood, c.city,
+            c.state, c.phone, c.celphone, c.email from `order` o
+            left join customer c on o.customer = c.id
             left join status_order s on o.status = s.id and o.id = ? ";
             $stm = DB::prepare($sql);
             try{

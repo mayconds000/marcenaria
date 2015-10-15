@@ -26,6 +26,6 @@ require_once 'routes/supplier.php';
 require_once 'routes/buy.php';
 require_once 'routes/order.php';
 require_once 'routes/environment.php';
-require_once 'routes/product_order.php';
+require_once 'routes/product.php';
 
 $app->run();
