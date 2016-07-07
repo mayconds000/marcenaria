@@ -52,3 +52,4 @@
 [Wed Sep 02 13:27:58.148158 2015] [access_compat:error] [pid 1788:tid 980] [client ::1:56875] AH01797: client denied by server configuration: D:/www/supermassas/
 [Wed Sep 02 13:27:58.329168 2015] [access_compat:error] [pid 1788:tid 980] [client ::1:56875] AH01797: client denied by server configuration: D:/www/supermassas/
 [Wed Sep 02 13:27:58.500178 2015] [access_compat:error] [pid 1788:tid 980] [client ::1:56875] AH01797: client denied by server configuration: D:/www/supermassas/
+[Mon Jan 25 16:55:34.981989 2016] [:error] [pid 2420:tid 976] [client 127.0.0.1:50202] script 'D:/projetos/marcenaria/checkInventory.php' not found or unable to stat, referer: http://filepi.com/i/MPYRMsy

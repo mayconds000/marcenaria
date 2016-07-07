@@ -1,7 +1,6 @@
-$app.controller('productCtrl', function($scope, $routeParams, orderProductAPI) {
+$app.controller('productCtrl', function($scope, $routeParams, orderProductAPI, totalOrderSVC) {
   var idOrder = $routeParams.id;
   $scope.updateP = false;
-
   var add = function(data) {
     data.value = data.value.replace(",", ".");
     data.order = idOrder;
@@ -28,7 +27,7 @@ $app.controller('productCtrl', function($scope, $routeParams, orderProductAPI) {
   var getAll = function(idOrder, id) {
     orderProductAPI.getProduct(idOrder, id).success(function(data) {
       $scope.products = data;
-      getTotal();
+       getTotal();
     });
 
   };
@@ -42,13 +41,9 @@ $app.controller('productCtrl', function($scope, $routeParams, orderProductAPI) {
     }
   };
 
-var getTotal =  function(){
-    data = $scope.products;
-    total = 0;
-    for(i in data){
-      total += data[i].qtd * data[i].value;
-    }
-    $scope.totalPedido = total;
+  $scope.editProduct = function(prod) {
+    $scope.updateP = true;
+    $scope.item = prod;
   };
 
   $scope.updateProduct = function(product) {
@@ -56,10 +51,21 @@ var getTotal =  function(){
     $scope.item = {};
     $scope.updateP = false;
   };
+
   $scope.removeProduct = function(id, index) {
     remove(id);
     $scope.products.splice(index, 1);
   };
 
-  getAll(idOrder, null);
+  var getTotal = function() {
+    data = $scope.products;
+    total = 0;
+    for (i in data) {
+      total += data[i].qtd * data[i].value;
+    }
+  $scope.$parent.totalPedido = total;
+  totalOrderSVC.setTotalPedido(total);
+  };
+
+   getAll(idOrder, null);
 });

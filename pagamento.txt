@@ -1,0 +1,17 @@
+Pagamento 
+1º Criar um ou mais pagamentos para um pedido
+Nesse pagamento eu vou ter data, vencimento, especie, descrição, valor, 
+data do pagamento, juros, valor pago e status.
+
+# Quando for no cartao vou cadastrar um pagamento apenas com valor total.
+	Esse recebimento vai direto para conta entao nao aparece no fluxo de caixa
+	apenas no total recebido.
+
+# Quando for no boleto eu vou ter que gerar para cada boleto um pagamento.
+	Informar o dia fixo para que gere todos na mesma data.
+
+# Quando for no cheque eu vou ter que cadastrar um pagamento.
+	Depois no contas a receber eu cadasto os cheques de quem eu peguei. 
+	e quando eu passar ou depositar tenho que dar baixa nos mesmos.
+
+# Quando for no dinheiro mesmo posso cadastrar as parcelas manualmente.
