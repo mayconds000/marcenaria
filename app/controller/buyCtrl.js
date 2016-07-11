@@ -101,9 +101,4 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter, supplierAPI
             });
         }
     };
-    var soma = function() {
-            console.log("funcionando filtro");
-    };
-
-
 });

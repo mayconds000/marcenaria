@@ -13,11 +13,11 @@
                 </div>
                 <div class="form-group col-sm-4 col-md-4">
                     <label for="">Mes</label>
-                  <input type="text" class="form-control" ng-model="mes">
+                  <input type="text" class="form-control" ng-model="month">
                 </div>
                 <div class="form-group col-sm-4 col-md-4">
                     <label for="">Ano</label>
-                  <input type="text" class="form-control" ng-model="ano">
+                  <input type="text" class="form-control" ng-model="year">
                 </div>
                 <div class="form-group col-sm-4 col-md-4">
                     <label for="">Cliente</label>
@@ -57,7 +57,7 @@
                         <th></th>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="order in orders track by $index | filter:search | orderBy:'date_register'">
+                        <tr ng-repeat="order in orders | filter:search | periodo:year:month | orderBy:'date_register'">
                             <td>{{order.id}}</td>
                             <td>{{order.date_register | date:"dd-MM-yyyy"}}</td>
                             <td>{{order.firstName +" "+ order.lastName}}</td>
