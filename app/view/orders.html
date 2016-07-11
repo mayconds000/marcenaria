@@ -57,7 +57,7 @@
                         <th></th>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="order in orders | filter:search | periodo:year:month | orderBy:'date_register'">
+                        <tr ng-repeat="order in orders | filter:search | periodoVendas:year:month | orderBy:'date_register'">
                             <td>{{order.id}}</td>
                             <td>{{order.date_register | date:"dd-MM-yyyy"}}</td>
                             <td>{{order.firstName +" "+ order.lastName}}</td>

@@ -30,4 +30,6 @@ $app.controller('ordersCtrl', function($window, $scope, $location, $http, orderA
   $scope.deleteOrder = function(ord) {
     remove(ord.id);
   };
+}).filter('byPeriod', function(){
+
 });
