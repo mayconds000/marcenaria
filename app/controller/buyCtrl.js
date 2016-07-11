@@ -45,7 +45,14 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter, supplierAPI
     $scope.rm = function(compra) {
         if(window.confirm("Você tem certeza que deseja deletar o item: "+ compra.numero)){
             $http.delete(svrUrl + "/buy/"+ compra.id).success(function(data) {
+                $scope.orders = $scope.orders.filter(function(obj){
+                  if(compra.id != obj.id)
+                  return true;
+
+                  return false;
+                });
                 console.log("compra deletado com sucesso");
+
             });
         }
     };

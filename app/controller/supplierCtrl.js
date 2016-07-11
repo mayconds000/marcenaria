@@ -50,7 +50,10 @@ $app.controller('supplierCtrl', function($scope, $http, $window, supplierAPI) {
   $scope.delCustomer = function(data) {
     if ($window.confirm("Você tem certeza que deseja deletar?")) {
       supplierAPI.deleteSupplier(data.id).success(function(data) {
-        getCustomer(null);
+        getCustomers(null);
+      }).error(function(err){
+        $window.alert("você não pode deletar este fornecedor pois existe pedidos cadastrados para o mesmo! \r"
+        + "Certifique-se de que não haja mais pedidos e então delete o fornecedor");
       });
     }
   };
