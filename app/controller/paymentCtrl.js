@@ -20,17 +20,14 @@ function(orderProductAPI, paymentAPI, $scope, $routeParams, totalOrderSVC){
 var desconto = function(){
   //totalPedido = totalOrderSVC.getTotalPedido();
   totalPedido = $scope.$parent.totalPedido === undefined ? 0 : $scope.$parent.totalPedido;
-  $scope.pagamento.desconto = $scope.pagamento.desconto === 0 ? totalPedido * 0.05 : $scope.pagamento.desconto;
+  $scope.pagamento.desconto = totalPedido != 0 ? totalPedido * 0.05 : $scope.pagamento.desconto;
    var entrada = $scope.pagamento.entrada;
    var desconto = $scope.pagamento.desconto;
+   console.log(desconto);
    $scope.totalComDesconto = totalPedido - desconto - entrada;
    calculoParcelasCheques(entrada, totalPedido, desconto);
    calculoParcelasBoletos(entrada, totalPedido, desconto);
    calculoParcelasCartao(entrada, totalPedido, desconto);
-  };
-
-  $scope.pedidoDesconto = function() {
-    desconto();
   };
 
   var calculoParcelasBoletos = function(entrada, totalPedido, desconto){
@@ -102,4 +99,6 @@ var desconto = function(){
     };
   $scope.parcelasCheques = cheques;
   };
+
+  $scope.pedidoDesconto =  desconto;
 });
