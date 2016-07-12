@@ -1,4 +1,20 @@
 $app.controller('ordersCtrl', function($window, $scope, $location, $http, orderAPI, customerAPI, orderProductAPI) {
+  $scope.years = ["2015", "2016", "2017"];
+  $scope.months = [
+      {mes: "Todos", number: "all"},
+      {mes: "Janeiro", number: "01"},
+      {mes: "Fevereiro", number: "02"},
+      {mes: "Março", number: "03"},
+      {mes: "Abril", number: "04"},
+      {mes: "Maio", number: "05"},
+      {mes: "Junho", number: "06"},
+      {mes: "Julho", number: "07"},
+      {mes: "Agosto", number: "08"},
+      {mes: "Setembro", number: "09"},
+      {mes: "Outubro", number: "10"},
+      {mes: "Novembro", number: "11"},
+      {mes: "Dezembro", number: "12"}];
+
   var getAll = function() {
     orderAPI.getOrder(null).success(function(data) {
       $scope.orders = data;
@@ -30,6 +46,22 @@ $app.controller('ordersCtrl', function($window, $scope, $location, $http, orderA
   $scope.deleteOrder = function(ord) {
     remove(ord.id);
   };
-}).filter('byPeriod', function(){
+})
+.filter('byPeriodo', function(){
+  return function(arr, year, month){
+    year = (year === undefined || year === null) ? String(new Date().getFullYear()) : year;
+    month = (month === undefined || month === null) ? Number(new Date().getMonth() + 1) : month;
+    var arr = arr.filter(function(item) {
+        if(year == item.date_register.substr(0,4)){
+          if(month == item.date_register.substr(5,2)) return true;
+          else if(month === "all"){
+            return true;
+          }else{
+            return false;
+          }
+        }
+      });
 
+      return arr;
+    };
 });
