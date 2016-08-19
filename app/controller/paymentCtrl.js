@@ -1,6 +1,7 @@
 $app.controller("paymentCtrl",
 function(orderProductAPI, paymentAPI, $scope, $routeParams, totalOrderSVC){
   var order = $routeParams.id;
+  console.log(order);
   $scope.pagamento = {};
   $scope.pagamento.desconto = 0;
   $scope.pagamento.entrada = 0;
@@ -23,7 +24,6 @@ var desconto = function(){
   $scope.pagamento.desconto = totalPedido != 0 ? totalPedido * 0.05 : $scope.pagamento.desconto;
    var entrada = $scope.pagamento.entrada;
    var desconto = $scope.pagamento.desconto;
-   console.log(desconto);
    $scope.totalComDesconto = totalPedido - desconto - entrada;
    calculoParcelasCheques(entrada, totalPedido, desconto);
    calculoParcelasBoletos(entrada, totalPedido, desconto);

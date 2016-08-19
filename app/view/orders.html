@@ -20,10 +20,10 @@
                 </div>
                 <div class="col-sm-4 col-md-4 form-group">
                     <label for="">Mês</label>
-                    <select name="" id="" ng-model="month" class="form-control"
-                    ng-options="month.number as month.mes for month in months">
-                        <option value="" disabled>Selecione um mês!</option>
+                    <select name="month" id="month" ng-model="months.selectedOption" class="form-control"
+                    ng-options="month.number as month.mes for month in months.availableMonths">
                     </select>
+                    <tt>{{months.selectedOption}}</tt>
                 </div>
                 <div class="form-group col-sm-4 col-md-4">
                     <label for="">Cliente</label>
@@ -63,7 +63,7 @@
                         <th></th>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="order in orders | filter:search | byPeriodo:year:month | orderBy:'date_register'">
+                        <tr ng-repeat="order in orders | filter:search | byPeriodo:year:months.selectedOption | orderBy:'date_register'">
                             <td>{{order.id}}</td>
                             <td>{{order.date_register | date:"dd-MM-yyyy"}}</td>
                             <td>{{order.firstName +" "+ order.lastName}}</td>

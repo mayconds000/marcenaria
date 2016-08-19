@@ -48,6 +48,11 @@ $app.config(['$routeProvider', function($routeProvider) {
       controller: 'orderCtrl',
       templateUrl: 'app/view/order.html'
     })
+    //pagamento
+    .when('/order/:id/payment', {
+      controller: 'paymentCtrl',
+      templateUrl: 'app/view/payment.html'
+    })
     .otherwise({redirectTo:'/'});
 
 }]);

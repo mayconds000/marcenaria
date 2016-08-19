@@ -1,19 +1,35 @@
 $app.controller('ordersCtrl', function($window, $scope, $location, $http, orderAPI, customerAPI, orderProductAPI) {
+  var months = [
+    {mes: "Todos", number: "all"},
+    {mes: "Janeiro", number: "01"},
+    {mes: "Fevereiro", number: "02"},
+    {mes: "Março", number: "03"},
+    {mes: "Abril", number: "04"},
+    {mes: "Maio", number: "05"},
+    {mes: "Junho", number: "06"},
+    {mes: "Julho", number: "07"},
+    {mes: "Agosto", number: "08"},
+    {mes: "Setembro", number: "09"},
+    {mes: "Outubro", number: "10"},
+    {mes: "Novembro", number: "11"},
+    {mes: "Dezembro", number: "12"}
+  ];
+
+  var returnCurrentMonth = function(months){
+    for(i in months){
+      if((new Date().getMonth() + 1) == months[i].number){
+        return months[i].number;
+      }
+    }
+    return months[0].number;
+  };
+
   $scope.years = ["2015", "2016", "2017"];
-  $scope.months = [
-      {mes: "Todos", number: "all"},
-      {mes: "Janeiro", number: "01"},
-      {mes: "Fevereiro", number: "02"},
-      {mes: "Março", number: "03"},
-      {mes: "Abril", number: "04"},
-      {mes: "Maio", number: "05"},
-      {mes: "Junho", number: "06"},
-      {mes: "Julho", number: "07"},
-      {mes: "Agosto", number: "08"},
-      {mes: "Setembro", number: "09"},
-      {mes: "Outubro", number: "10"},
-      {mes: "Novembro", number: "11"},
-      {mes: "Dezembro", number: "12"}];
+  $scope.months = {
+    availableMonths : months,
+    selectedOption : returnCurrentMonth(months)
+  };
+
 
   var getAll = function() {
     orderAPI.getOrder(null).success(function(data) {
@@ -51,6 +67,9 @@ $app.controller('ordersCtrl', function($window, $scope, $location, $http, orderA
   return function(arr, year, month){
     year = (year === undefined || year === null) ? String(new Date().getFullYear()) : year;
     month = (month === undefined || month === null) ? Number(new Date().getMonth() + 1) : month;
+
+    if(!arr) return arr = [];
+
     var arr = arr.filter(function(item) {
         if(year == item.date_register.substr(0,4)){
           if(month == item.date_register.substr(5,2)) return true;
@@ -61,7 +80,6 @@ $app.controller('ordersCtrl', function($window, $scope, $location, $http, orderA
           }
         }
       });
-
       return arr;
     };
 });
