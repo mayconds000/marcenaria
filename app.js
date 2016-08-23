@@ -1,4 +1,4 @@
-var svrUrl = "http://localhost/marcenaria/server/index.php";
+var svrUrl = "http://app.marcenaria/server/index.php";
 var dateToBr = function(data) {
     return data.toString().split("-").reverse().join("/");
 };

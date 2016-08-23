@@ -1,7 +1,17 @@
 $app.controller("paymentCtrl",
-function(orderProductAPI, paymentAPI, $scope, $routeParams, totalOrderSVC){
+function(orderProductAPI, paymentAPI, $scope, $routeParams){
   var order = $routeParams.id;
-  console.log(order);
+  $scope.totalPedido = 0;
+
+  orderProductAPI.getTotal(order).success(function(products){
+    var total = 0;
+    for(x in products){
+      total += products[x].qtd * products[x].value;
+    }
+    $scope.totalPedido = total;
+    desconto();
+  });
+
   $scope.pagamento = {};
   $scope.pagamento.desconto = 0;
   $scope.pagamento.entrada = 0;
@@ -19,8 +29,7 @@ function(orderProductAPI, paymentAPI, $scope, $routeParams, totalOrderSVC){
   };
 
 var desconto = function(){
-  //totalPedido = totalOrderSVC.getTotalPedido();
-  totalPedido = $scope.$parent.totalPedido === undefined ? 0 : $scope.$parent.totalPedido;
+  totalPedido = $scope.totalPedido === undefined ? 0 : $scope.totalPedido;
   $scope.pagamento.desconto = totalPedido != 0 ? totalPedido * 0.05 : $scope.pagamento.desconto;
    var entrada = $scope.pagamento.entrada;
    var desconto = $scope.pagamento.desconto;

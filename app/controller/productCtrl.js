@@ -1,4 +1,4 @@
-$app.controller('productCtrl', function($scope, $routeParams, orderProductAPI, totalOrderSVC) {
+$app.controller('productCtrl', function($scope, $routeParams, orderProductAPI) {
   var idOrder = $routeParams.id;
   $scope.updateP = false;
   var add = function(data) {
@@ -63,8 +63,7 @@ $app.controller('productCtrl', function($scope, $routeParams, orderProductAPI, t
     for (i in data) {
       total += data[i].qtd * data[i].value;
     }
-  $scope.$parent.totalPedido = total;
-  totalOrderSVC.setTotalPedido(total);
+  $scope.totalPedido = total;
   };
 
    getAll(idOrder, null);

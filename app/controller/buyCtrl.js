@@ -61,9 +61,9 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter, supplierAPI
         $scope.newBuy = true;
         $scope.compra = {};
         $scope.compra = compra;
+        $scope.compra.data = dateConvert.toBr(compra.data);
         $scope.compra.fornecedor = compra.fornecedor_id;
-        $scope.compra.data = new Date(compra.data);
-        $scope.compra.valor = $scope.compra.valor.replace(".",",");
+        $scope.compra.valor = currencyConvert.toBr($scope.compra.valor);
     };
 
     $scope.back = function() {
@@ -72,9 +72,9 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter, supplierAPI
 
     $scope.saveBuy = function() {
         data = JSON.parse(JSON.stringify($scope.compra));
-        data.data = data.data.substr(0,10);
-        data.valor = data.valor.replace(",",".");
-        console.log(data);
+        data.data = dateConvert.toUs(data.data);
+        data.valor = currencyConvert.toUs(data.valor);
+
         if(data.hasOwnProperty('id')) {
             $http.put(svrUrl + "/buy", data).success(function(data) {
                 $scope.msg = "compra Atualizada com sucesso!"
@@ -89,7 +89,7 @@ $app.controller('buyCtrl', function($scope, $http, $window, $filter, supplierAPI
             });
         } else {
             $http.post(svrUrl + "/buy", data).success(function(data) {
-                $scope.msg = "compra cadastrada com sucesso!"
+                $scope.msg = "compra cadastrada com sucesso!";
                 $scope.panelMsg = true;
                 setTimeout(function() {
                     getOrders();

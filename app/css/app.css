@@ -1,3 +1,6 @@
+body{
+  min-width: 485px;
+}
 input.ng-invalid {
   border: 1px solid red;
 }
@@ -15,19 +18,28 @@ input.ng-pristine {
     border:0px solid !important;
   }
 }
-
+@media screen and (max-width: 480px){
+  body{
+    font-size: 9px;
+  }
+}
+@media screen and (min-width: 481px) and (max-width: 1199px){
+  body{
+    font-size: 12px;
+  }
+}
 //Payment
 .list-payment{
   padding: 0px;
   margin-left: 0px;
   list-style: none;
-  font-size: 9px;
+  font-size: 6px;
   float: left;
   clear: both;
 }
 .list-inline{
   display: inline-table;
-  width: 25%;
-  margin:0 30px 10px 0;
+  margin:0 20px 10px 0;
   float: left;
+  width: 120px;
 }
