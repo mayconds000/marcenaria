@@ -10,10 +10,63 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2016-07-20 16:02:16
+Date: 2016-08-29 18:06:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `bank`
+-- ----------------------------
+DROP TABLE IF EXISTS `bank`;
+CREATE TABLE `bank` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `num` varchar(20) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of bank
+-- ----------------------------
+INSERT INTO `bank` VALUES ('1', '033', 'Santander');
+INSERT INTO `bank` VALUES ('2', '104', 'Caixa Economica');
+INSERT INTO `bank` VALUES ('3', '399', 'HSBC');
+INSERT INTO `bank` VALUES ('4', '341', 'Itau');
+INSERT INTO `bank` VALUES ('5', '001', 'Brasil');
+INSERT INTO `bank` VALUES ('6', '756', 'Sicoob');
+INSERT INTO `bank` VALUES ('7', '748', 'Sicredi');
+INSERT INTO `bank` VALUES ('8', '237', 'Bradesco');
+
+-- ----------------------------
+-- Table structure for `bill`
+-- ----------------------------
+DROP TABLE IF EXISTS `bill`;
+CREATE TABLE `bill` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) NOT NULL,
+  `num_doc` varchar(20) DEFAULT NULL,
+  `date_register` date NOT NULL,
+  `due_date` date NOT NULL,
+  `date_payment` date DEFAULT NULL,
+  `document_value` decimal(10,2) NOT NULL,
+  `payment_value` decimal(10,2) DEFAULT NULL,
+  `supplier` int(11) NOT NULL,
+  `document_type` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `observation` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_bill_supplier_1` (`supplier`),
+  KEY `fk_bill_document_type_1` (`document_type`),
+  KEY `fk_bill_status_payment_receipt_1` (`status`),
+  CONSTRAINT `fk_bill_status_payment_receipt_1` FOREIGN KEY (`status`) REFERENCES `status_payment_receipt` (`id`),
+  CONSTRAINT `fk_bill_document_type_1` FOREIGN KEY (`document_type`) REFERENCES `document_type` (`id`),
+  CONSTRAINT `fk_bill_supplier_1` FOREIGN KEY (`supplier`) REFERENCES `supplier` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of bill
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `buy`
@@ -28,8 +81,8 @@ CREATE TABLE `buy` (
   `valor` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_buy_supplier` (`fornecedor_id`),
-  CONSTRAINT `fk_buy_supplier` FOREIGN KEY (`fornecedor_id`) REFERENCES `supplier` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_buy_supplier_1` FOREIGN KEY (`fornecedor_id`) REFERENCES `supplier` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of buy
@@ -50,7 +103,9 @@ INSERT INTO `buy` VALUES ('14', '1', '2015-04-01', '2015-04-17', '7864489', '125
 INSERT INTO `buy` VALUES ('15', '2', '2015-04-01', '2015-04-17', '7864489', '43299.00');
 INSERT INTO `buy` VALUES ('16', '3', '2015-04-02', '2015-04-17', '213213', '125.36');
 INSERT INTO `buy` VALUES ('17', '3', '2015-04-02', '2015-04-17', '213213', '7968.34');
-INSERT INTO `buy` VALUES ('25', '2', '2015-03-05', '2015-04-22', '02365985', '357.45');
+INSERT INTO `buy` VALUES ('26', '1', '0000-00-00', '2016-08-22', '1231231', '1450.00');
+INSERT INTO `buy` VALUES ('27', '2', '2016-08-23', '2016-08-23', '442442', '1435.50');
+INSERT INTO `buy` VALUES ('28', '3', '2016-08-19', '2016-08-23', '456895', '1692.33');
 
 -- ----------------------------
 -- Table structure for `customer`
@@ -85,6 +140,26 @@ INSERT INTO `customer` VALUES ('7', 'Pedro', 'Pereira Pedreira', 'rua joao vieir
 INSERT INTO `customer` VALUES ('8', 'Saraiva', 'Ltda', 'Rua Venezuela', '135', 'Interior', '86998789', 'City', 'PR', '44325669999', '44999984545', '', '1', '2015-03-17', '2016-07-08', '0');
 
 -- ----------------------------
+-- Table structure for `document_type`
+-- ----------------------------
+DROP TABLE IF EXISTS `document_type`;
+CREATE TABLE `document_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of document_type
+-- ----------------------------
+INSERT INTO `document_type` VALUES ('1', 'Dinheiro');
+INSERT INTO `document_type` VALUES ('2', 'Boleto');
+INSERT INTO `document_type` VALUES ('3', 'Cheque');
+INSERT INTO `document_type` VALUES ('4', 'Prazo');
+INSERT INTO `document_type` VALUES ('5', 'C. Crédito');
+INSERT INTO `document_type` VALUES ('6', 'C. Débito');
+
+-- ----------------------------
 -- Table structure for `environment`
 -- ----------------------------
 DROP TABLE IF EXISTS `environment`;
@@ -95,8 +170,7 @@ CREATE TABLE `environment` (
   `date` date NOT NULL,
   PRIMARY KEY (`id`,`date`),
   KEY `id` (`id`),
-  KEY `environment_order_fk` (`order`),
-  CONSTRAINT `environment_order_fk` FOREIGN KEY (`order`) REFERENCES `order` (`id`) ON DELETE CASCADE
+  KEY `environment_order_fk` (`order`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -119,7 +193,7 @@ CREATE TABLE `fisic_person` (
   `rg` varchar(14) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_fisic_person_customer_1` (`id_customer`),
-  CONSTRAINT `fk_fisic_person_customer_1` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `fk_fisic_person_customer_1` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -139,7 +213,7 @@ CREATE TABLE `legal_person` (
   `ie` varchar(14) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_legal_person_customer_1` (`id_customer`),
-  CONSTRAINT `fk_legal_person_customer_1` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`) ON DELETE CASCADE
+  CONSTRAINT `fk_legal_person_customer_1` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -160,9 +234,9 @@ CREATE TABLE `order` (
   PRIMARY KEY (`id`),
   KEY `order_customer-fk` (`customer`),
   KEY `order_status_fk` (`status`),
-  CONSTRAINT `order_customer-fk` FOREIGN KEY (`customer`) REFERENCES `customer` (`id`),
-  CONSTRAINT `order_status_fk` FOREIGN KEY (`status`) REFERENCES `status_order` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_order_status_order_1` FOREIGN KEY (`status`) REFERENCES `status_order` (`id`),
+  CONSTRAINT `fk_order_customer_1` FOREIGN KEY (`customer`) REFERENCES `customer` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of order
@@ -179,6 +253,31 @@ INSERT INTO `order` VALUES ('13', '1', '2015-06-03', '1');
 INSERT INTO `order` VALUES ('14', '1', '2015-06-03', '1');
 INSERT INTO `order` VALUES ('15', '4', '2016-07-12', '1');
 INSERT INTO `order` VALUES ('16', '7', '2016-07-12', '1');
+INSERT INTO `order` VALUES ('17', '1', '2016-08-19', '1');
+
+-- ----------------------------
+-- Table structure for `payment_order`
+-- ----------------------------
+DROP TABLE IF EXISTS `payment_order`;
+CREATE TABLE `payment_order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) NOT NULL,
+  `total_order` decimal(10,2) NOT NULL,
+  `entry` decimal(10,2) DEFAULT NULL,
+  `discount` decimal(10,2) DEFAULT NULL,
+  `date_register` date NOT NULL,
+  `type` int(11) NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_payment_order_order_1` (`order_id`),
+  KEY `fk_payment_order_document_type_1` (`type`),
+  CONSTRAINT `fk_payment_order_document_type_1` FOREIGN KEY (`type`) REFERENCES `document_type` (`id`),
+  CONSTRAINT `fk_payment_order_order_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of payment_order
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `product_order`
@@ -192,8 +291,8 @@ CREATE TABLE `product_order` (
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `product_environment_fk` (`order`),
-  CONSTRAINT `productOrder` FOREIGN KEY (`order`) REFERENCES `order` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_product_order_order_1` FOREIGN KEY (`order`) REFERENCES `order` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_order
@@ -203,8 +302,45 @@ INSERT INTO `product_order` VALUES ('3', 'criados mudo', '2', '275.00', '4');
 INSERT INTO `product_order` VALUES ('4', 'roupeiro em mdf', '4', '3215.00', '4');
 INSERT INTO `product_order` VALUES ('5', 'mdf', '125', '14.36', '13');
 INSERT INTO `product_order` VALUES ('6', 'foo', '5', '143.26', '15');
-INSERT INTO `product_order` VALUES ('7', 'bar', '14', '15.95', '15');
+INSERT INTO `product_order` VALUES ('7', 'bar', '14', '24.50', '15');
 INSERT INTO `product_order` VALUES ('8', 'pregos', '15', '12.41', '16');
+INSERT INTO `product_order` VALUES ('9', 'Balcão de atendimento', '10', '730.15', '17');
+
+-- ----------------------------
+-- Table structure for `receipt`
+-- ----------------------------
+DROP TABLE IF EXISTS `receipt`;
+CREATE TABLE `receipt` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) DEFAULT NULL,
+  `customer` int(11) NOT NULL,
+  `order` int(11) NOT NULL,
+  `document_type` int(11) NOT NULL,
+  `num_doc` varchar(20) DEFAULT NULL,
+  `bank` int(11) DEFAULT NULL,
+  `date_emission` date NOT NULL,
+  `due_date` date NOT NULL,
+  `date_receipt` date DEFAULT NULL,
+  `doc_value` decimal(10,2) DEFAULT NULL,
+  `value_receipt` decimal(10,2) DEFAULT NULL,
+  `status_receipt` int(11) NOT NULL,
+  `observation` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_receipt_document_type_1` (`document_type`),
+  KEY `fk_receipt_status_payment_receipt_1` (`status_receipt`),
+  KEY `fk_receipt_customer_1` (`customer`),
+  KEY `fk_receipt_bank_1` (`bank`),
+  KEY `fk_receipt_order_1` (`order`),
+  CONSTRAINT `fk_receipt_order_1` FOREIGN KEY (`order`) REFERENCES `order` (`id`),
+  CONSTRAINT `fk_receipt_bank_1` FOREIGN KEY (`bank`) REFERENCES `bank` (`id`),
+  CONSTRAINT `fk_receipt_customer_1` FOREIGN KEY (`customer`) REFERENCES `customer` (`id`),
+  CONSTRAINT `fk_receipt_document_type_1` FOREIGN KEY (`document_type`) REFERENCES `document_type` (`id`),
+  CONSTRAINT `fk_receipt_status_payment_receipt_1` FOREIGN KEY (`status_receipt`) REFERENCES `status_payment_receipt` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of receipt
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `status_order`
@@ -221,6 +357,23 @@ CREATE TABLE `status_order` (
 -- ----------------------------
 INSERT INTO `status_order` VALUES ('1', 'Orçamento');
 INSERT INTO `status_order` VALUES ('2', 'Pedido');
+
+-- ----------------------------
+-- Table structure for `status_payment_receipt`
+-- ----------------------------
+DROP TABLE IF EXISTS `status_payment_receipt`;
+CREATE TABLE `status_payment_receipt` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of status_payment_receipt
+-- ----------------------------
+INSERT INTO `status_payment_receipt` VALUES ('1', 'Receber');
+INSERT INTO `status_payment_receipt` VALUES ('2', 'Pago');
+INSERT INTO `status_payment_receipt` VALUES ('3', 'Aberto');
 
 -- ----------------------------
 -- Table structure for `supplier`
