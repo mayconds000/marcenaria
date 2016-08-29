@@ -1,141 +1,139 @@
 <div>
-  <div class="panel panel-default" ng-controller="paymentCtrl">
-    <div class="panel-heading">
-      <span><b>PAGAMENTO</b></span>
-    </div>
-    <div class="panel-body" >
-      <!--Formas de Pagamento-->
-      <div class="col-sm-12">
-        <div class="col-sm-12 col-md-12 " ng-init="pedidoDesconto()">
-          <span style="width: 100%; display: block;"><b>FORMAS DE PAGAMENTO SUGERIDAS</b></span>
-          <div class="col-sm-12 col-md-6">
-            <div class="well">
-              <span>Avista</span>
-              <div>preço com desconto</div>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-6">
-            <div class="well ">
-              <span>Cartão</span>
-                <ul class="list-payment clearfix" style="padding-left: 0;">
-                  <li class="list-inline" ng-repeat="cartao in parcelasCartao">{{cartao.parcela}} de {{cartao.valorParcela | currency}}</li>
-                </ul>
-            </div>
-
-          </div>
-          <div class="col-sm-12 col-md-6">
-            <div class="well ">
-              <span><b>Boleto</b></span>
-              <div>
-                <ul class="list-payment clearfix" style="padding-left: 0;">
-                  <li class="list-inline" ng-repeat="pag in parcelasBoleto">{{pag.parcela}} de {{pag.valorParcela | currency}}</li>
-                </ul>
-              </div>
-            </div>
-
-          </div>
-          <div class="col-sm-12 col-md-6">
-            <div class="well clearfix">
-              <span>Cheque</span>
-              <div>
-                <ul class="list-payment">
-                  <li class="list-inline">1+2 de {{totalComDesconto / 3 | currency}}*</li>
-                  <li class="list-inline" ng-repeat="cheq in parcelasCheques">{{cheq.parcela}} de {{cheq.valorParcela | currency}}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+    <div class="panel panel-default" ng-controller="paymentCtrl">
+        <div class="panel-heading">
+            <span><b>PAGAMENTO</b></span>
         </div>
-        <!--fim div formas de pagamento-->
+        <div class="panel-body">
+            <!--Formas de Pagamento-->
+            <div class="col-sm-12">
+                <div class="col-sm-12" ng-init="pedidoDesconto()">
+                    <span style="width: 100%; display: block;"><b>FORMAS DE PAGAMENTO SUGERIDAS</b></span>
+                    <div class="col-sm-12 col-md-6">
+
+                        <div class="well">
+                            <span>Avista</span>
+                            <div>R$ {{totalComDesconto}}</div>
+                        </div>
+
+
+                        <div class="well ">
+                            <span><b>Boleto</b></span>
+                            <div>
+                                <ul class="list-payment clearfix" style="padding-left: 0;">
+                                    <li class="list-inline" ng-repeat="pag in parcelasBoleto">{{pag.parcela}} de {{pag.valorParcela | currency}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="well ">
+                            <span>Cartão</span>
+                            <ul class="list-payment clearfix" style="padding-left: 0;">
+                                <li class="list-inline" ng-repeat="cartao in parcelasCartao">{{cartao.parcela}} de {{cartao.valorParcela | currency}}</li>
+                            </ul>
+                        </div>
+                        <div class="well clearfix">
+                            <span>Cheque</span>
+                            <div>
+                                <ul class="list-payment">
+                                    <li class="list-inline">1+2 de {{totalComDesconto / 3 | currency}}*</li>
+                                    <li class="list-inline" ng-repeat="cheq in parcelasCheques">{{cheq.parcela}} de {{cheq.valorParcela | currency}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--fim div formas de pagamento-->
+            <div class="col-sm-12">
+                <span><b>ESCOLHIDO</b></span>
+                <form>
+                    <div class="form-group col-sm-12 col-md-6">
+                        <label for="">Descrição</label>
+                        <textarea class="form-control" rows="3" ng-model="pagamento.data" placeholder="Insira o acordo aqui..."></textarea>
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6">
+                        <label for="">Valor do pedido</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <input class="form-control" type="text" ng-model="totalPedido" disabled/>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6">
+                        <label for="">Desconto</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <input class="form-control" ng-model="pagamento.desconto" ng-blur="pedidoDesconto()" type="text">
+                        </div>
+
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6">
+                        <label for="">Entrada</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <input class="form-control" ng-model="pagamento.entrada" ng-blur="pedidoDesconto()" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6">
+                        <label for="">Total - Desconto/Entrada</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <input class="form-control" ng-model="totalComDesconto" type="text" disabled>
+                        </div>
+
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6">
+                        <label for="">Forma</label>
+                        <select class="form-control" ng-model="formaPagamento">
+                            <option value="1">Avista</option>
+                            <option value="2">Cheque</option>
+                            <option value="3">Boleto</option>
+                            <option value="4">Cartão</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6">
+                        <label for="">&nbsp</label>
+                        <button class="form-control btn btn-default">Confirmar</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
         <div class="col-sm-12">
-          <span><b>ESCOLHIDO</b></span>
-          <form>
-            <div class="form-group col-sm-12 col-md-6">
-              <label for="">Vencimento</label>
-              <input class="form-control" ng-model="pagamento.data" type="date">
-            </div>
-            <div class="form-group col-sm-12 col-md-6">
-              <label for="">Valor do pedido</label>
-                <div class="input-group">
-                  <span class="input-group-addon">R$</span>
-                <input class="form-control" type="text" ng-model="totalPedido" disabled/>
-              </div>
-            </div>
-            <div class="form-group col-sm-12 col-md-6">
-              <label for="">Desconto</label>
-              <div class="input-group">
-                <span class="input-group-addon">R$</span>
-                <input class="form-control" ng-model="pagamento.desconto" ng-value="{{pagament.desconto | currency}}" ng-change="pedidoDesconto()" type="text">
-              </div>
-
-            </div>
-            <div class="form-group col-sm-12 col-md-6">
-              <label for="">Entrada</label>
-              <div class="input-group">
-                <span class="input-group-addon">R$</span>
-                <input class="form-control" ng-model="pagamento.entrada" ng-change="pedidoDesconto()" type="text">
-              </div>
-            </div>
-            <div class="form-group col-sm-12 col-md-6">
-              <label for="">Total - Desconto/Entrada</label>
-              <div class="input-group">
-                <span class="input-group-addon">R$</span>
-                <input class="form-control" ng-model="totalComDesconto" type="text">
-              </div>
-
-            </div>
-            <div class="form-group col-sm-12 col-md-6">
-              <label for="">Forma</label>
-              <select class="form-control" ng-model="formaPagamento">
-                <option value="1">Avista</option>
-                <option value="2">Cheque</option>
-                <option value="3">Boleto</option>
-                <option value="4">Cartão</option>
-              </select>
-            </div>
-            <div class="form-group col-sm-12 col-md-6">
-              <label for="">&nbsp</label>
-              <button class="form-control btn btn-default">Confirmar</button>
-            </div>
-
-          </form>
-
+            <span>Descrição</span>
+            <table class="table table-hovered">
+                <thead>
+                    <tr>
+                        <th>Parcela</th>
+                        <th>Vencimento</th>
+                        <th>Valor</th>
+                        <th>Data Pagamento</th>
+                        <th>Juros</th>
+                        <th>Vlr Pago</th>
+                        <th>Status</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1 de 9</td>
+                        <td>00/00/2015</td>
+                        <td>R$ 1500,00</td>
+                        <td>11/11/1111</td>
+                        <td>R$ 15,00</td>
+                        <td></td>
+                        <td></td>
+                        <td>x</td>
+                        <td>/</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-
-      </div>
-      <div class="col-sm-12">
-        <span>PARCELAS</span>
-        <table class="table table-hovered">
-          <thead>
-            <tr>
-              <th>Parcela</th>
-              <th>Vencimento</th>
-              <th>Valor</th>
-              <th>Data Pagamento</th>
-              <th>Juros</th>
-              <th>Vlr Pago</th>
-              <th>Status</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1 de 9</td>
-              <td>00/00/2015</td>
-              <td>R$ 1500,00</td>
-              <td>11/11/1111</td>
-              <td>R$ 15,00</td>
-              <td></td>
-              <td></td>
-              <td>x</td>
-              <td>/</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </div>
-  </div>
-  <!-- fim Pagamento -->
+</div>
+<!-- fim Pagamento -->
 
 </div>

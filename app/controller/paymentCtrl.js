@@ -29,14 +29,21 @@ function(orderProductAPI, paymentAPI, $scope, $routeParams){
   };
 
 var desconto = function(){
-  totalPedido = $scope.totalPedido === undefined ? 0 : $scope.totalPedido;
-  $scope.pagamento.desconto = totalPedido != 0 ? totalPedido * 0.05 : $scope.pagamento.desconto;
-   var entrada = $scope.pagamento.entrada;
-   var desconto = $scope.pagamento.desconto;
-   $scope.totalComDesconto = totalPedido - desconto - entrada;
+  var totalPedido = currencyConvert.toUs($scope.totalPedido);
+    var entrada = currencyConvert.toUs($scope.pagamento.entrada);
+  var desconto = currencyConvert.toUs($scope.pagamento.desconto);
+
+  desconto = desconto == 0 ? totalPedido * 0.05 : desconto;
+
+   var totalComDesconto = totalPedido - desconto - entrada;
+   $scope.totalComDesconto = currencyConvert.toBr(totalComDesconto);
    calculoParcelasCheques(entrada, totalPedido, desconto);
    calculoParcelasBoletos(entrada, totalPedido, desconto);
    calculoParcelasCartao(entrada, totalPedido, desconto);
+   $scope.totalPedido = currencyConvert.toBr(totalPedido);
+   $scope.pagamento.entrada = currencyConvert.toBr(entrada);
+   $scope.pagamento.desconto = currencyConvert.toBr(desconto);
+
   };
 
   var calculoParcelasBoletos = function(entrada, totalPedido, desconto){
