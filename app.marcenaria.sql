@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : connection
 Source Server Version : 50617
 Source Host           : localhost:3306
-Source Database       : ads.sistema
+Source Database       : app.marcenaria
 
 Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2016-08-29 18:06:37
+Date: 2016-08-30 10:21:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -59,9 +59,9 @@ CREATE TABLE `bill` (
   KEY `fk_bill_supplier_1` (`supplier`),
   KEY `fk_bill_document_type_1` (`document_type`),
   KEY `fk_bill_status_payment_receipt_1` (`status`),
-  CONSTRAINT `fk_bill_status_payment_receipt_1` FOREIGN KEY (`status`) REFERENCES `status_payment_receipt` (`id`),
+  CONSTRAINT `fk_bill_supplier_1` FOREIGN KEY (`supplier`) REFERENCES `supplier` (`id`),
   CONSTRAINT `fk_bill_document_type_1` FOREIGN KEY (`document_type`) REFERENCES `document_type` (`id`),
-  CONSTRAINT `fk_bill_supplier_1` FOREIGN KEY (`supplier`) REFERENCES `supplier` (`id`)
+  CONSTRAINT `fk_bill_status_payment_receipt_1` FOREIGN KEY (`status`) REFERENCES `status_payment_receipt` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -80,7 +80,7 @@ CREATE TABLE `buy` (
   `numero` varchar(11) DEFAULT NULL,
   `valor` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_buy_supplier` (`fornecedor_id`),
+  KEY `fk_buy_supplier_1` (`fornecedor_id`),
   CONSTRAINT `fk_buy_supplier_1` FOREIGN KEY (`fornecedor_id`) REFERENCES `supplier` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
@@ -104,7 +104,7 @@ INSERT INTO `buy` VALUES ('15', '2', '2015-04-01', '2015-04-17', '7864489', '432
 INSERT INTO `buy` VALUES ('16', '3', '2015-04-02', '2015-04-17', '213213', '125.36');
 INSERT INTO `buy` VALUES ('17', '3', '2015-04-02', '2015-04-17', '213213', '7968.34');
 INSERT INTO `buy` VALUES ('26', '1', '0000-00-00', '2016-08-22', '1231231', '1450.00');
-INSERT INTO `buy` VALUES ('27', '2', '2016-08-23', '2016-08-23', '442442', '1435.50');
+INSERT INTO `buy` VALUES ('27', '2', '2016-08-23', '2016-08-23', '442442', '1225.80');
 INSERT INTO `buy` VALUES ('28', '3', '2016-08-19', '2016-08-23', '456895', '1692.33');
 
 -- ----------------------------
@@ -129,15 +129,16 @@ CREATE TABLE `customer` (
   `date_update` date DEFAULT NULL,
   `status` smallint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of customer
 -- ----------------------------
 INSERT INTO `customer` VALUES ('1', 'Maycon', 'Donizete dos Santos', 'rua dos alfinetes', '435', 'terra media', '86990000', 'Narnia', 'PR', '4032356654', '1120456400', 'mayconds000@gmail.com', '0', '2015-03-13', '2016-07-08', '0');
-INSERT INTO `customer` VALUES ('4', 'Cliente Jurídica', 'Fantasia', '', '', '', '0', '', '', '1231212123', '12113213332', '', '1', '2015-03-13', '2016-07-08', '0');
+INSERT INTO `customer` VALUES ('4', 'Cliente Jurídica', 'Fantasia 2', 'Rua braga', '175', 'centro', '86990000', 'Maringa', 'pr', '1231212123', '12113213332', '', '1', '2015-03-13', '2016-08-30', '0');
 INSERT INTO `customer` VALUES ('7', 'Pedro', 'Pereira Pedreira', 'rua joao vieira', '1543', 'centro', '00222111', 'Tallsville', 'pr', '4545454454', '4566666666', '', '0', '2015-03-17', '2016-07-08', '0');
 INSERT INTO `customer` VALUES ('8', 'Saraiva', 'Ltda', 'Rua Venezuela', '135', 'Interior', '86998789', 'City', 'PR', '44325669999', '44999984545', '', '1', '2015-03-17', '2016-07-08', '0');
+INSERT INTO `customer` VALUES ('9', 'Santa', 'Ana', 'rua dos anjos', '432', 'Jd Custódio', '87890899', 'Marialva', 'PR', '4432323530', '4432323569', '', '0', '2016-08-30', '2016-08-30', '0');
 
 -- ----------------------------
 -- Table structure for `document_type`
@@ -160,29 +161,6 @@ INSERT INTO `document_type` VALUES ('5', 'C. Crédito');
 INSERT INTO `document_type` VALUES ('6', 'C. Débito');
 
 -- ----------------------------
--- Table structure for `environment`
--- ----------------------------
-DROP TABLE IF EXISTS `environment`;
-CREATE TABLE `environment` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) NOT NULL,
-  `order` int(11) NOT NULL,
-  `date` date NOT NULL,
-  PRIMARY KEY (`id`,`date`),
-  KEY `id` (`id`),
-  KEY `environment_order_fk` (`order`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of environment
--- ----------------------------
-INSERT INTO `environment` VALUES ('1', 'Cozinha', '2', '0000-00-00');
-INSERT INTO `environment` VALUES ('2', 'Quarto', '2', '2015-06-05');
-INSERT INTO `environment` VALUES ('3', 'Ambiente', '2', '2015-06-05');
-INSERT INTO `environment` VALUES ('4', 'Ambiente', '10', '2015-06-05');
-INSERT INTO `environment` VALUES ('5', 'Ambiente', '10', '2015-06-05');
-
--- ----------------------------
 -- Table structure for `fisic_person`
 -- ----------------------------
 DROP TABLE IF EXISTS `fisic_person`;
@@ -194,13 +172,14 @@ CREATE TABLE `fisic_person` (
   PRIMARY KEY (`id`),
   KEY `fk_fisic_person_customer_1` (`id_customer`),
   CONSTRAINT `fk_fisic_person_customer_1` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fisic_person
 -- ----------------------------
 INSERT INTO `fisic_person` VALUES ('1', '1', '14676373511', '12123123121');
 INSERT INTO `fisic_person` VALUES ('4', '7', '07410951907', '122324566456');
+INSERT INTO `fisic_person` VALUES ('5', '9', '07410951907', '112222111111');
 
 -- ----------------------------
 -- Table structure for `legal_person`
@@ -219,7 +198,7 @@ CREATE TABLE `legal_person` (
 -- ----------------------------
 -- Records of legal_person
 -- ----------------------------
-INSERT INTO `legal_person` VALUES ('3', '4', '00000000000000', '0000000');
+INSERT INTO `legal_person` VALUES ('3', '4', '02944891000160', '1233344566');
 INSERT INTO `legal_person` VALUES ('5', '8', '00000000000000', '4524566442452');
 
 -- ----------------------------
@@ -232,10 +211,10 @@ CREATE TABLE `order` (
   `date_register` date NOT NULL,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `order_customer-fk` (`customer`),
-  KEY `order_status_fk` (`status`),
-  CONSTRAINT `fk_order_status_order_1` FOREIGN KEY (`status`) REFERENCES `status_order` (`id`),
-  CONSTRAINT `fk_order_customer_1` FOREIGN KEY (`customer`) REFERENCES `customer` (`id`)
+  KEY `fk_order_customer_1` (`customer`),
+  KEY `fk_order_status_order_1` (`status`),
+  CONSTRAINT `fk_order_customer_1` FOREIGN KEY (`customer`) REFERENCES `customer` (`id`),
+  CONSTRAINT `fk_order_status_order_1` FOREIGN KEY (`status`) REFERENCES `status_order` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -271,8 +250,8 @@ CREATE TABLE `payment_order` (
   PRIMARY KEY (`id`),
   KEY `fk_payment_order_order_1` (`order_id`),
   KEY `fk_payment_order_document_type_1` (`type`),
-  CONSTRAINT `fk_payment_order_document_type_1` FOREIGN KEY (`type`) REFERENCES `document_type` (`id`),
-  CONSTRAINT `fk_payment_order_order_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`)
+  CONSTRAINT `fk_payment_order_order_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`),
+  CONSTRAINT `fk_payment_order_document_type_1` FOREIGN KEY (`type`) REFERENCES `document_type` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -290,7 +269,7 @@ CREATE TABLE `product_order` (
   `value` decimal(10,2) DEFAULT NULL,
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `product_environment_fk` (`order`),
+  KEY `fk_product_order_order_1` (`order`),
   CONSTRAINT `fk_product_order_order_1` FOREIGN KEY (`order`) REFERENCES `order` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
@@ -326,16 +305,16 @@ CREATE TABLE `receipt` (
   `status_receipt` int(11) NOT NULL,
   `observation` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_receipt_document_type_1` (`document_type`),
   KEY `fk_receipt_status_payment_receipt_1` (`status_receipt`),
+  KEY `fk_receipt_document_type_1` (`document_type`),
   KEY `fk_receipt_customer_1` (`customer`),
   KEY `fk_receipt_bank_1` (`bank`),
   KEY `fk_receipt_order_1` (`order`),
-  CONSTRAINT `fk_receipt_order_1` FOREIGN KEY (`order`) REFERENCES `order` (`id`),
-  CONSTRAINT `fk_receipt_bank_1` FOREIGN KEY (`bank`) REFERENCES `bank` (`id`),
-  CONSTRAINT `fk_receipt_customer_1` FOREIGN KEY (`customer`) REFERENCES `customer` (`id`),
+  CONSTRAINT `fk_receipt_status_payment_receipt_1` FOREIGN KEY (`status_receipt`) REFERENCES `status_payment_receipt` (`id`),
   CONSTRAINT `fk_receipt_document_type_1` FOREIGN KEY (`document_type`) REFERENCES `document_type` (`id`),
-  CONSTRAINT `fk_receipt_status_payment_receipt_1` FOREIGN KEY (`status_receipt`) REFERENCES `status_payment_receipt` (`id`)
+  CONSTRAINT `fk_receipt_customer_1` FOREIGN KEY (`customer`) REFERENCES `customer` (`id`),
+  CONSTRAINT `fk_receipt_bank_1` FOREIGN KEY (`bank`) REFERENCES `bank` (`id`),
+  CONSTRAINT `fk_receipt_order_1` FOREIGN KEY (`order`) REFERENCES `order` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -407,4 +386,4 @@ INSERT INTO `supplier` VALUES ('1', 'DECORE', 'Decoracao', '00000000000000', '11
 INSERT INTO `supplier` VALUES ('2', 'Inc materiais', '- Ind. e Com. de Carpintaria LTDA', '00000000000000', '0000000000', 'Av. das Indústrias', '762', 'Bairro', '32956111', 'Cidade', 'PR', '0000000000', '0000000000', '', '2015-03-18', '2016-07-08', '0');
 INSERT INTO `supplier` VALUES ('3', 'Comp 02', 'Produtos moveleiros LTDA', '00000000000000', '000000000000', 'Fjadfhaushi', '45465', 'fadfadsfad', '00000000', 'Curitiba', 'PR', '9999999999', '9999999999', '', '2015-03-18', '2016-07-08', '0');
 INSERT INTO `supplier` VALUES ('4', 'Kof materiais', 'Comercio de Produtos para Marcenaria LTDA', '00000000000000', '00000000000', 'Av. Duque de Caxias', '556', 'Centro', '11111111', 'Presidente', 'PR', '33333333333', '', '0', '2015-03-18', '2016-07-08', '0');
-INSERT INTO `supplier` VALUES ('5', 'Comp', 'Produtos Moveleiros LTDA', '0', '0', 'Av. das Industrias', '', '', '0', '', '', '9999999999', '0', '0', '2015-03-18', '2016-07-08', '0');
+INSERT INTO `supplier` VALUES ('5', 'Comp', 'Produtos Moveleiros LTDA', '0', '0', 'Av. das Industrias', '', '', '0', '', '', '9999999999', '44991844444', 'ads@gmail.com', '2015-03-18', '2016-08-30', '0');

@@ -1,30 +1,74 @@
 $app.controller("paymentCtrl",
 function(orderProductAPI, paymentAPI, $scope, $routeParams){
   var order = $routeParams.id;
+  $scope.pagamento = {};
+  $scope.pagamento.isDefined = false;
   $scope.totalPedido = 0;
 
-  orderProductAPI.getTotal(order).success(function(products){
-    var total = 0;
-    for(x in products){
-      total += products[x].qtd * products[x].value;
+  paymentAPI.getPayment(order).success(function(data){
+    if(data){
+      $scope.totalPedido = data.total_order;
+      $scope.pagamento.desconto = data.discount;
+      $scope.pagamento.entrada = data.entry;
+      desconto();
+      return;
+    }else{
+      $scope.pagamento.desconto = 0;
+      $scope.pagamento.entrada = 0;
+
+      orderProductAPI.getTotal(order).success(function(products){
+        var total = 0;
+        for(x in products){
+          total += products[x].qtd * products[x].value;
+        }
+        $scope.totalPedido = total;
+        desconto();
+      });
     }
-    $scope.totalPedido = total;
-    desconto();
+  }).error(function(data){
+    $scope.pagamento.desconto = 0;
+    $scope.pagamento.entrada = 0;
+
+    orderProductAPI.getTotal(order).success(function(products){
+      var total = 0;
+      for(x in products){
+        total += products[x].qtd * products[x].value;
+      }
+      $scope.totalPedido = total;
+      desconto();
+    });
+    console.log(data);
   });
 
-  $scope.pagamento = {};
-  $scope.pagamento.desconto = 0;
-  $scope.pagamento.entrada = 0;
 
-  var add = function(payment, order){
+
+
+  var add = function(){
+    var d = new Date().toLocaleString().substr(0,10);
+    d = dateConvert.toUs(d)
+    var data = {
+      description : $scope.pagamento.description,
+      total_order: $scope.totalPedido,
+      entry: $scope.pagamento.entrada,
+      discount: $scope.pagamento.desconto,
+      date_register: d,
+      type : $scope.formaPagamento,
+      order_id : order
+    };
+
+    $scope.pagamento.isDefined;
+
+    // paymentAPI.savePayment(data).success(function(data){
+    //   $scope.pagamento.isDefined = true;
+    // });
 
   };
 
-  var remove = function(payment, order){
+  var remove = function(data, order){
 
   };
 
-  var update = function(payment, order){
+  var update = function(data, order){
 
   };
 
@@ -117,4 +161,5 @@ var desconto = function(){
   };
 
   $scope.pedidoDesconto =  desconto;
+  $scope.add = add;
 });
