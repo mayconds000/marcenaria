@@ -14,7 +14,7 @@ class Payment{
         $data->type,
         $data->order_id
       ));
-      return $stm->fetch(DB::lastInsertId());
+      return $stm->rowCount();
     }catch(PDOException $e){
       echo $e->getMessage();
     }
@@ -63,7 +63,7 @@ class Payment{
       $stm->execute(array(
         $order
       ));
-      return ;
+      return $stm->fetch();
     } catch(PDOException $e) {
       echo $e->getMessage();
     }

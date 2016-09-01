@@ -1,18 +1,27 @@
 $app.controller("paymentCtrl",
 function(orderProductAPI, paymentAPI, $scope, $routeParams){
   var order = $routeParams.id;
+  var isUpdate = false;
+  $scope.order = order;
   $scope.pagamento = {};
-  $scope.pagamento.isDefined = false;
+  $scope.pagamento.isDefined = true;
   $scope.totalPedido = 0;
+  $scope.formaPagamento = 1;
 
   paymentAPI.getPayment(order).success(function(data){
     if(data){
+      isUpdate = true;
+      $scope.pagamento.isDefined = true;
       $scope.totalPedido = data.total_order;
+      $scope.pagamento.description = data.description;
       $scope.pagamento.desconto = data.discount;
       $scope.pagamento.entrada = data.entry;
+      $scope.formatPagamento = data.type;
       desconto();
       return;
     }else{
+      isUpdate = false;
+      $scope.pagamento.isDefined = false;
       $scope.pagamento.desconto = 0;
       $scope.pagamento.entrada = 0;
 
@@ -26,6 +35,8 @@ function(orderProductAPI, paymentAPI, $scope, $routeParams){
       });
     }
   }).error(function(data){
+    isUpdate = false;
+    $scope.pagamento.isDefined = false;
     $scope.pagamento.desconto = 0;
     $scope.pagamento.entrada = 0;
 
@@ -37,15 +48,16 @@ function(orderProductAPI, paymentAPI, $scope, $routeParams){
       $scope.totalPedido = total;
       desconto();
     });
-    console.log(data);
+    console.error(data);
   });
 
-
-
-
   var add = function(){
+    if($scope.pagamento.description === undefined)
+    return;
+
     var d = new Date().toLocaleString().substr(0,10);
-    d = dateConvert.toUs(d)
+    d = dateConvert.toUs(d);
+    //da pra refatorar colocando o que nao pertencer ao objeto pagamento dentro do mesmo
     var data = {
       description : $scope.pagamento.description,
       total_order: $scope.totalPedido,
@@ -56,11 +68,20 @@ function(orderProductAPI, paymentAPI, $scope, $routeParams){
       order_id : order
     };
 
-    $scope.pagamento.isDefined;
+    if(!isUpdate){
 
-    // paymentAPI.savePayment(data).success(function(data){
-    //   $scope.pagamento.isDefined = true;
-    // });
+      paymentAPI.savePayment(data).success(function(data){
+        $scope.pagamento.isDefined = true;
+        console.log("salvo com sucesso");
+      }).error(function(data){
+        console.log(data);
+      });
+    } else {
+      paymentAPI.updatePayment(data).success(function(data){
+        $scope.pagamento.isDefined = true;
+        console.log("atualizou com sucesso");
+      });
+    }
 
   };
 
@@ -68,8 +89,9 @@ function(orderProductAPI, paymentAPI, $scope, $routeParams){
 
   };
 
-  var update = function(data, order){
-
+  var update = function(){
+    $scope.pagamento.isDefined = false;
+    $scope.isUpdate = true;
   };
 
 var desconto = function(){
@@ -162,4 +184,5 @@ var desconto = function(){
 
   $scope.pedidoDesconto =  desconto;
   $scope.add = add;
+  $scope.update = update;
 });

@@ -18,16 +18,12 @@ input.ng-pristine {
     border:0px solid !important;
   }
 }
-@media screen and (max-width: 480px){
-  body{
-    font-size: 9px;
-  }
-}
-@media screen and (min-width: 481px) and (max-width: 1199px){
+@media screen and (max-width: 1199px){
   body{
     font-size: 12px;
   }
 }
+
 //Payment
 .list-payment{
   padding: 0px;

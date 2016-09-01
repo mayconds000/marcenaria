@@ -50,7 +50,9 @@
                 <form>
                     <div class="form-group col-sm-12 col-md-6">
                         <label for="">Descrição</label>
-                        <textarea class="form-control" rows="3" ng-model="pagamento.description" placeholder="Insira o acordo aqui..." required></textarea>
+                        <textarea class="form-control" rows="3" maxlength="254"
+                        ng-model="pagamento.description" placeholder="insira a descrição da venda aqui!"
+                         required="required"></textarea>
                     </div>
                     <div class="form-group col-sm-12 col-md-6">
                         <label for="">Valor do pedido</label>
@@ -84,8 +86,8 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6">
                         <label for="">Forma</label>
-                        <select class="form-control" ng-model="formaPagamento" required>
-                            <option value="1" selected>Dinheiro</option>
+                        <select class="form-control" ng-model="formaPagamento" required="required">
+                            <option selected="selected" value="1">Dinheiro</option>
                             <option value="3">Cheque</option>
                             <option value="5">Cartao - Crédito</option>
                             <option value="5">Cartao - Dédito</option>
@@ -95,7 +97,7 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6">
                         <label for="">&nbsp</label>
-                        <button class="form-control btn btn-default" ng-click="add()">Confirmar</button>
+                        <input class="form-control btn btn-default" value="Confirmar" ng-click="add();" >
                     </div>
 
                 </form>
@@ -104,7 +106,37 @@
 
         </div>
         <div class="panel-body" id="pagamento-definido" ng-show="pagamento.isDefined">
-          <h2>Pagamento esta definido</h2>
+          <div class="col-xs-12">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td style="text-align: right; width: 100px;"><b>Descrição</b></label></td>
+                  <td>{{pagamento.description }}</td>
+                </tr>
+                <tr>
+                  <td style="text-align: right;"><b>Subtotal</b></td>
+                  <td>{{totalPedido | currency: "R$ "}}</td>
+                </tr>
+                <tr>
+                  <td style="text-align: right;"><b>Desconto</b></td>
+                  <td>{{pagamento.desconto | currency: "R$ "}}</td>
+                </tr>
+                <tr>
+                  <td style="text-align: right;"><b>Entrada</b></td>
+                  <td>{{pagamento.entrada | currency: "R$ "}}</td>
+                </tr>
+                <tr>
+                  <td style="text-align: right;"><b>Total</b></td>
+                  <td>{{totalPedido - pagamento.desconto - pagamento.entrada | currency: "R$ "}}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="row pull-right">
+              <a href="#/order/{{order}}" class="btn btn-danger">Voltar</a>
+              <button class="btn btn-primary" ng-click="update();">Alterar</button>
+            </div>
+
         </div>
     </div>
 </div>

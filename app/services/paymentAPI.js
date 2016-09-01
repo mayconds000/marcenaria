@@ -1,6 +1,6 @@
 $app.factory('paymentAPI', function($http){
   var _getPayment = function(order){
-    return $http.get(svrUrl + '/payment/:order');
+    return $http.get(svrUrl + '/payment/' + order);
   };
 
   var _savePayment = function(data){

@@ -17,12 +17,12 @@ class Order {
     }
 
     public function update($data) {
-        $sql = "update `order` set customer=? where id=?";
+        $sql = "update `order` set customer=?, status=? where id=?";
         $stm = DB::prepare($sql);
 
         try{
-            $stm->execute(array($data->customer, $data->id));
-
+            $stm->execute(array($data->customer, $data->status, $data->id));
+            return $stm->rowCount();
         } catch(PDOException $e) {
             echo $e->getMessage();
         }

@@ -106,9 +106,15 @@
         </form>
       </div>
     </div>
-    <!-- Pagamento -->
   </div>
 
+<hr>
+  <!-- botoes -->
+  <div class="col-xs-12">
+    <div class="col-xs-12 col-sm-4"><button class="btn btn-default col-xs-12" ng-click="confirm()">Confirmar Pedido</button></div>
+    <div class="col-xs-12 col-sm-4"><a href="#/order/{{pedido.id}}/payment" class="btn btn-default col-xs-12 ">Definir Pagamento</a></div>
+    <div class="col-xs-12 col-sm-4"><a href="#/orders" class="btn btn-danger col-xs-12 ">Voltar</a></div>
+  </div>
 
   <!-- Customer Selection -->
   <div id="customer-selection" ng-show="selectionCustomer">

@@ -32,4 +32,18 @@ $app.controller('orderCtrl', function($scope, $routeParams, $location, $route, o
       });
     }
   };
+
+  $scope.confirm = function(){
+    data = $scope.pedido;
+    data.status = 2;
+
+    orderAPI.updateOrder(data).success(function(){
+      $route.reload();
+    }).error(function(err){
+      console.log(err);
+    });
+  };
+
+
+
 });
