@@ -3,12 +3,12 @@ $app.controller('orderCtrl', function($scope, $routeParams, $location, $route, o
   var id = $routeParams.id;
 
   if (id) {
-    $scope.addOrUpdate = "Alterar cliente";
+    $scope.addOrUpdate = "Alterar";
     orderAPI.getOrder(id).success(function(data) {
       $scope.pedido = data;
     });
   } else {
-    $scope.addOrUpdate = "Add cliente";
+    $scope.addOrUpdate = "Adicionar cliente";
   }
 
   $scope.addCustomer = function() {
@@ -33,6 +33,10 @@ $app.controller('orderCtrl', function($scope, $routeParams, $location, $route, o
     }
   };
 
+  $scope.backToOrder = function(){
+    $scope.selectionCustomer = false;
+  };
+
   $scope.confirm = function(){
     data = $scope.pedido;
     data.status = 2;
@@ -44,6 +48,9 @@ $app.controller('orderCtrl', function($scope, $routeParams, $location, $route, o
     });
   };
 
+$scope.update = function() {
+  $scope.pedido.status = 'Orçamento';
+};
 
 
 });
