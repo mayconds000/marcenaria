@@ -11,33 +11,32 @@
         <br />
       </span>
     </div>
-  <div class="row">
-    <div class="row">
+  <div >
+    <div>
         <span><b>PEDIDO Nº: </b>{{pedido.id}}</span>
         <span style="margin-left: 40px;"><b>DATA:</b> {{pedido.date_register | date:"dd-MM-yyyy"}}</span>
         <span style="margin-left: 40px;"><b>STATUS:</b> {{pedido.status}}</span>
     </div>
-    <div class="row">
+    <div>
         <span><b>NOME:</b> {{pedido.firstName + " " + pedido.lastName | uppercase}}</span>
     </div>
-    <div class="row">
+    <div >
       <span><b>ENDEREÇO:</b> {{pedido.address + ", " + pedido.number + ", "
         + pedido.neighborhood + ", " + pedido.city + " - "
         + pedido.state | uppercase}} </span>
     </div>
-    <div class="row">
+    <div >
       <span><b>CONTATOS:</b> {{pedido.phone + " || " + pedido.celphone +" || " + pedido.email | uppercase}} </span>
     </div>
-    <div class="row">
+    <div class="pull-right button-group" ng-show="!selectionCustomer">
       <button class="btn btn-default hidden-print" ng-click="addCustomer()">{{addOrUpdate}}</button>
+      <a href="#/orders" class="btn btn-danger hidden-print">Voltar</a>
     </div>
   </div>
 
-    <hr />
-
-    <div>
-      <div ng-controller="productCtrl">
-        <h3>Itens do pedido</h3>
+    <hr style="clear:right; margin-top:50px;" />
+    <h3>Itens do pedido</h3>
+    <div ng-controller="productCtrl">
         <table class="table table-condensed tabled-hover">
           <thead>
             <tr>
@@ -102,27 +101,64 @@
             <label for="valor">Valor</label>
             <input class="form-control" type="text" ng-model="item.value">
           </div>
-          <div class="form-group col-xs-12 col-sm-2 col-md-2">
-            <label for="">&nbsp</label>
-            <button class=" form-control btn btn-default col-xs-12" ng-click="updateProduct(item)">Alterar</button>
+          <div class="col-xs-12 col-sm-2 col-md-2 hidden-print">
+              <button class="btn btn-default" ng-click="updateProduct(item)">Alterar</button>
+
           </div>
         </form>
-      </div>
+        <button class="btn btn-default pull-right hidden-print" style="display:block;"
+        ng-show="!selectionCustomer" ng-hide="pedido.status == 'Pedido'"
+        ng-click="confirm()">Confirmar Pedido</button>
+        <button class="btn btn-default pull-right hidden-print" style="display:block;"
+        ng-show="!selectionCustomer" ng-hide="pedido.status == 'Orçamento'"
+        ng-click="update()">Alterar Pedido</button>
     </div>
   </div>
   <!-- fim pedido -->
 
-  <!-- botoes -->
-  <div class="row pull-right hidden-print" ng-show="!selectionCustomer">
-    <hr style="width: 100%;">
-    <div class="button-group">
-      <button class="btn btn-default" ng-hide="pedido.status == 'Pedido'" ng-click="confirm()">Confirmar Pedido</button>
-      <button class="btn btn-default" ng-hide="pedido.status == 'Orçamento'" ng-click="update()">Alterar Pedido</button>
-      <a href="#/order/{{pedido.id}}/payment" class="btn btn-default hidden-print">Definir Pagamento</a>
-      <a href="#/orders" class="btn btn-danger hidden-print">Voltar</a>
-    </div>
-  </div>
 
+
+
+
+
+
+
+  <!-- Pagamento -->
+
+
+  <div style="clear:right; margin-top:100px;" ng-controller="paymentCtrl" ng-show="!selectionCustomer">
+    <h3 >Pagamento</h3>
+    <a href="#/order/{{pedido.id}}/payment" class="btn btn-default hidden-print" ng-show="!pagamento.isDefined">Definir Pagamento</a>
+    <div ng-show="pagamento.isDefined">
+      <table class="table">
+          <tbody>
+              <tr>
+                  <td style="text-align: right; width: 100px;"><b>Descrição</b></label>
+                  </td>
+                  <td>{{pagamento.description }}</td>
+              </tr>
+              <tr>
+                  <td style="text-align: right;"><b>Subtotal</b></td>
+                  <td>{{totalPedido | currency: "R$ "}}</td>
+              </tr>
+              <tr>
+                  <td style="text-align: right;"><b>Desconto</b></td>
+                  <td>{{pagamento.desconto | currency: "R$ "}}</td>
+              </tr>
+              <tr>
+                  <td style="text-align: right;"><b>Entrada</b></td>
+                  <td>{{pagamento.entrada | currency: "R$ "}}</td>
+              </tr>
+              <tr>
+                  <td style="text-align: right;"><b>Total</b></td>
+                  <td>{{totalPedido - pagamento.desconto - pagamento.entrada | currency: "R$ "}}</td>
+              </tr>
+          </tbody>
+      </table>
+      <a href="#/order/{{pedido.id}}/payment" class="btn btn-default pull-right" ng-click="update();">Alterar</a>
+    </div>
+
+  </div>
   <!-- Customer Selection -->
   <div id="customer-selection" ng-show="selectionCustomer">
     <h3>Selecione o Cliente</h3>

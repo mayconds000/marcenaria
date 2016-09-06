@@ -1,5 +1,5 @@
 $app.controller("paymentCtrl",
-function(orderProductAPI, paymentAPI, $scope, $routeParams){
+function(orderProductAPI, paymentAPI, $scope, $routeParams, $route){
   var order = $routeParams.id;
   var isUpdate = false;
   $scope.order = order;
@@ -70,11 +70,11 @@ function(orderProductAPI, paymentAPI, $scope, $routeParams){
 
     if(!isUpdate){
 
-      paymentAPI.savePayment(data).success(function(data){
+      paymentAPI.savePayment(data).success(function(result){
         $scope.pagamento.isDefined = true;
-        console.log("salvo com sucesso");
+        $route.reload();
       }).error(function(data){
-        console.log(data);
+        console.log(data.message);
       });
     } else {
       paymentAPI.updatePayment(data).success(function(data){

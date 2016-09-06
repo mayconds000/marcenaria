@@ -1,144 +1,144 @@
 <div>
-    <div class="panel panel-default" ng-controller="paymentCtrl">
-        <div class="panel-heading">
-            <span><b>PAGAMENTO</b></span>
-        </div>
-        <div class="panel-body" ng-hide="pagamento.isDefined">
-            <!--Formas de Pagamento-->
-            <div class="col-sm-12">
-                <div class="col-sm-12">
-                    <span style="width: 100%; display: block;"><b>FORMAS DE PAGAMENTO SUGERIDAS</b></span>
-                    <div class="col-sm-12 col-md-6">
-
-                        <div class="well">
-                            <b>Avista</b>
-                            <div>R$ {{totalComDesconto}}</div>
-                        </div>
-
-
-                        <div class="well ">
-                            <b>Boleto</b>
-                            <div>
-                                <ul class="list-payment clearfix" style="padding-left: 0;">
-                                    <li class="list-inline" ng-repeat="pag in parcelasBoleto">{{pag.parcela}} de {{pag.valorParcela | currency}}</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="well ">
-                            <b>Cartão</b>
-                            <ul class="list-payment clearfix" style="padding-left: 0;">
-                                <li class="list-inline" ng-repeat="cartao in parcelasCartao">{{cartao.parcela}} de {{cartao.valorParcela | currency}}</li>
-                            </ul>
-                        </div>
-                        <div class="well clearfix">
-                            <b>Cheque</b>
-                                <ul class="list-payment clearfix"  style="padding-left: 0;">
-                                    <li class="list-inline">1+2 de {{totalComDesconto / 3 | currency}}*</li>
-                                    <li class="list-inline" ng-repeat="cheq in parcelasCheques">{{cheq.parcela}} de {{cheq.valorParcela | currency}}</li>
-                                </ul>
-                                <p style="width: 200px; display: block;">*: sem juros</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--fim div formas de pagamento-->
-            <div class="col-sm-12">
-                <span><b>ESCOLHIDO</b></span>
-                <form>
-                    <div class="form-group col-sm-12 col-md-6">
-                        <label for="">Descrição</label>
-                        <textarea class="form-control" rows="3" maxlength="254"
-                        ng-model="pagamento.description" placeholder="insira a descrição da venda aqui!"
-                         required="required"></textarea>
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6">
-                        <label for="">Valor do pedido</label>
-                        <div class="input-group">
-                            <span class="input-group-addon">R$</span>
-                            <input class="form-control" type="text" ng-model="totalPedido" disabled/>
-                        </div>
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6">
-                        <label for="">Desconto</label>
-                        <div class="input-group">
-                            <span class="input-group-addon">R$</span>
-                            <input class="form-control" ng-model="pagamento.desconto" ng-blur="pedidoDesconto()" type="text">
-                        </div>
-
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6">
-                        <label for="">Entrada</label>
-                        <div class="input-group">
-                            <span class="input-group-addon">R$</span>
-                            <input class="form-control" ng-model="pagamento.entrada" ng-blur="pedidoDesconto()" type="text">
-                        </div>
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6">
-                        <label for="">Total - Desconto/Entrada</label>
-                        <div class="input-group">
-                            <span class="input-group-addon">R$</span>
-                            <input class="form-control" ng-model="totalComDesconto" type="text" disabled>
-                        </div>
-
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6">
-                        <label for="">Forma</label>
-                        <select class="form-control" ng-model="formaPagamento" required="required">
-                            <option selected="selected" value="1">Dinheiro</option>
-                            <option value="3">Cheque</option>
-                            <option value="5">Cartao - Crédito</option>
-                            <option value="5">Cartao - Dédito</option>
-                            <option value="2">Boleto</option>
-                            <option value="4">Prazo</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6">
-                        <label for="">&nbsp</label>
-                        <input class="form-control btn btn-default" value="Confirmar" ng-click="add();" >
-                    </div>
-
-                </form>
-
-            </div>
-
-        </div>
-        <div class="panel-body" id="pagamento-definido" ng-show="pagamento.isDefined">
-          <div class="col-xs-12">
-            <table class="table">
-              <tbody>
-                <tr>
-                  <td style="text-align: right; width: 100px;"><b>Descrição</b></label></td>
-                  <td>{{pagamento.description }}</td>
-                </tr>
-                <tr>
-                  <td style="text-align: right;"><b>Subtotal</b></td>
-                  <td>{{totalPedido | currency: "R$ "}}</td>
-                </tr>
-                <tr>
-                  <td style="text-align: right;"><b>Desconto</b></td>
-                  <td>{{pagamento.desconto | currency: "R$ "}}</td>
-                </tr>
-                <tr>
-                  <td style="text-align: right;"><b>Entrada</b></td>
-                  <td>{{pagamento.entrada | currency: "R$ "}}</td>
-                </tr>
-                <tr>
-                  <td style="text-align: right;"><b>Total</b></td>
-                  <td>{{totalPedido - pagamento.desconto - pagamento.entrada | currency: "R$ "}}</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div class="row pull-right">
-              <a href="#/order/{{order}}" class="btn btn-danger">Voltar</a>
-              <button class="btn btn-primary" ng-click="update();">Alterar</button>
-            </div>
-
-        </div>
+  <div class="panel panel-default" ng-controller="paymentCtrl">
+    <div class="panel-heading">
+      <span><b>PAGAMENTO</b></span>
     </div>
-</div>
-<!-- fim Pagamento -->
+    <div class="panel-body" ng-hide="pagamento.isDefined">
+      <!--Formas de Pagamento-->
+      <div class="col-sm-12">
+        <div class="col-sm-12">
+          <span style="width: 100%; display: block;"><b>FORMAS DE PAGAMENTO SUGERIDAS</b></span>
+          <div class="col-sm-12 col-md-6">
+
+            <div class="well">
+              <b>Avista</b>
+              <div>R$ {{totalComDesconto}}</div>
+            </div>
+
+
+            <div class="well ">
+              <b>Boleto</b>
+              <div>
+                <ul class="list-payment clearfix" style="padding-left: 0;">
+                  <li class="list-inline" ng-repeat="pag in parcelasBoleto">{{pag.parcela}} de {{pag.valorParcela | currency}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <div class="well ">
+              <b>Cartão</b>
+              <ul class="list-payment clearfix" style="padding-left: 0;">
+                <li class="list-inline" ng-repeat="cartao in parcelasCartao">{{cartao.parcela}} de {{cartao.valorParcela | currency}}</li>
+              </ul>
+            </div>
+            <div class="well clearfix">
+              <b>Cheque</b>
+              <ul class="list-payment clearfix" style="padding-left: 0;">
+                <li class="list-inline">1+2 de {{totalComDesconto / 3 | currency}}*</li>
+                <li class="list-inline" ng-repeat="cheq in parcelasCheques">{{cheq.parcela}} de {{cheq.valorParcela | currency}}</li>
+              </ul>
+              <p style="width: 200px; display: block;">*: sem juros</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--fim div formas de pagamento-->
+      <div class="col-sm-12">
+        <span><b>ESCOLHIDO</b></span>
+        <form>
+          <div class="form-group col-sm-12 col-md-6">
+            <label for="">Descrição</label>
+            <textarea class="form-control" rows="3" maxlength="254" ng-model="pagamento.description" placeholder="insira a descrição da venda aqui!" required="required"></textarea>
+          </div>
+          <div class="form-group col-sm-12 col-md-6">
+            <label for="">Valor do pedido</label>
+            <div class="input-group">
+              <span class="input-group-addon">R$</span>
+              <input class="form-control" type="text" ng-model="totalPedido" disabled/>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-md-6">
+            <label for="">Desconto</label>
+            <div class="input-group">
+              <span class="input-group-addon">R$</span>
+              <input class="form-control" ng-model="pagamento.desconto" ng-blur="pedidoDesconto()" type="text">
+            </div>
+
+          </div>
+          <div class="form-group col-sm-12 col-md-6">
+            <label for="">Entrada</label>
+            <div class="input-group">
+              <span class="input-group-addon">R$</span>
+              <input class="form-control" ng-model="pagamento.entrada" ng-blur="pedidoDesconto()" type="text">
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-md-6">
+            <label for="">Total - Desconto/Entrada</label>
+            <div class="input-group">
+              <span class="input-group-addon">R$</span>
+              <input class="form-control" ng-model="totalComDesconto" type="text" disabled>
+            </div>
+
+          </div>
+          <div class="form-group col-sm-12 col-md-6">
+            <label for="">Forma</label>
+            <select class="form-control" ng-model="formaPagamento" required="required">
+              <option selected="selected" value="1">Dinheiro</option>
+              <option value="3">Cheque</option>
+              <option value="5">Cartao - Crédito</option>
+              <option value="5">Cartao - Dédito</option>
+              <option value="2">Boleto</option>
+              <option value="4">Prazo</option>
+          </select>
+          </div>
+          <div class="buttom-group col-sm-12 col-md-6">
+
+            <button class="btn btn-default" ng-click="add()">Cofirmar</button>
+            <a href="#/order/{{order}}" class="btn btn-danger">Voltar</a>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+    <div class="panel-body" id="pagamento-definido" ng-show="pagamento.isDefined">
+      <div class="col-xs-12">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td style="text-align: right; width: 100px;"><b>Descrição</b></label>
+              </td>
+              <td>{{pagamento.description }}</td>
+            </tr>
+            <tr>
+              <td style="text-align: right;"><b>Subtotal</b></td>
+              <td>{{totalPedido | currency: "R$ "}}</td>
+            </tr>
+            <tr>
+              <td style="text-align: right;"><b>Desconto</b></td>
+              <td>{{pagamento.desconto | currency: "R$ "}}</td>
+            </tr>
+            <tr>
+              <td style="text-align: right;"><b>Entrada</b></td>
+              <td>{{pagamento.entrada | currency: "R$ "}}</td>
+            </tr>
+            <tr>
+              <td style="text-align: right;"><b>Total</b></td>
+              <td>{{totalPedido - pagamento.desconto - pagamento.entrada | currency: "R$ "}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="row pull-right">
+          <button class="btn btn-default" ng-click="update();">Alterar</button>
+          <a href="#/order/{{order}}" class="btn btn-danger">Voltar</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- fim Pagamento -->
 
 </div>
