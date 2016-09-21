@@ -1,4 +1,7 @@
-var svrUrl = "http://app.marcenaria/server/index.php";
+//Apache
+// var svrUrl = "app.marcenaria/server/index.php";
+//nginx
+var svrUrl = "server/index.php";
 var dateToBr = function(data) {
     return data.toString().split("-").reverse().join("/");
 };

@@ -1,3 +1,4 @@
+"use strict";
 $app.controller('ordersCtrl', function($window, $scope, $location, $http, orderAPI, customerAPI, orderProductAPI) {
   var months = [
     {mes: "Todos", number: "all"},
@@ -16,7 +17,7 @@ $app.controller('ordersCtrl', function($window, $scope, $location, $http, orderA
   ];
 
   var returnCurrentMonth = function(months){
-    for(i in months){
+    for(var i in months){
       if((new Date().getMonth() + 1) == months[i].number){
         return months[i].number;
       }
@@ -34,6 +35,8 @@ $app.controller('ordersCtrl', function($window, $scope, $location, $http, orderA
   var getAll = function() {
     orderAPI.getOrder(null).success(function(data) {
       $scope.orders = data;
+    }).error(function(data){
+      console.log(data);
     });
   };
 

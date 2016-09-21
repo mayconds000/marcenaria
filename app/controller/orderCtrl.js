@@ -1,4 +1,5 @@
 $app.controller('orderCtrl', function($scope, $routeParams, $location, $route, orderAPI, customerAPI, orderProductAPI) {
+  "use strict";
   $scope.selectionCustomer = false;
   var id = $routeParams.id;
 
