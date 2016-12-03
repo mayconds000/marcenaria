@@ -1,5 +1,5 @@
 body{
-  min-width: 485px;
+  /*min-width: 320px;*/
 }
 input.ng-invalid {
   border: 1px solid red;
