@@ -8,38 +8,7 @@ function(orderProductAPI, paymentAPI, $scope, $routeParams, $route){
   $scope.totalPedido = 0;
   $scope.formaPagamento = 1;
 
-  paymentAPI.getPayment(order).success(function(data){
-    if(data){
-      isUpdate = true;
-      $scope.pagamento.isDefined = true;
-      $scope.totalPedido = data.total_order;
-      $scope.pagamento.description = data.description;
-      $scope.pagamento.desconto = data.discount;
-      $scope.pagamento.entrada = data.entry;
-      $scope.formatPagamento = data.type;
-      desconto();
-      return;
-    }else{
-      isUpdate = false;
-      $scope.pagamento.isDefined = false;
-      $scope.pagamento.desconto = 0;
-      $scope.pagamento.entrada = 0;
-
-      orderProductAPI.getTotal(order).success(function(products){
-        var total = 0;
-        for(x in products){
-          total += products[x].qtd * products[x].value;
-        }
-        $scope.totalPedido = total;
-        desconto();
-      });
-    }
-  }).error(function(data){
-    isUpdate = false;
-    $scope.pagamento.isDefined = false;
-    $scope.pagamento.desconto = 0;
-    $scope.pagamento.entrada = 0;
-
+  function getTotal() {
     orderProductAPI.getTotal(order).success(function(products){
       var total = 0;
       for(x in products){
@@ -48,6 +17,31 @@ function(orderProductAPI, paymentAPI, $scope, $routeParams, $route){
       $scope.totalPedido = total;
       desconto();
     });
+  }
+
+  paymentAPI.getPayment(order).success(function(data){
+    if(data){
+      isUpdate = true;
+      $scope.pagamento.isDefined = true;
+      $scope.pagamento.description = data.description;
+      $scope.pagamento.desconto = data.discount;
+      $scope.pagamento.entrada = data.entry;
+      $scope.formatPagamento = data.type;
+      getTotal();
+      return;
+    }else{
+      isUpdate = false;
+      $scope.pagamento.isDefined = false;
+      $scope.pagamento.desconto = 0;
+      $scope.pagamento.entrada = 0;
+      getTotal();
+    }
+  }).error(function(data){
+    isUpdate = false;
+    $scope.pagamento.isDefined = false;
+    $scope.pagamento.desconto = 0;
+    $scope.pagamento.entrada = 0;
+    getTotal();
     console.error(data);
   });
 
@@ -69,7 +63,6 @@ function(orderProductAPI, paymentAPI, $scope, $routeParams, $route){
     };
 
     if(!isUpdate){
-
       paymentAPI.savePayment(data).success(function(result){
         $scope.pagamento.isDefined = true;
         $route.reload();
